@@ -50,7 +50,9 @@ def top(c, neck='crew', zip=None, buttons=False, rib=False, cable=False, sweat=F
     if sleeves == 'long':
         body = LONG_BODY
     else:
-        body = 'M120 96 L74 116 L62 196 L110 206 L100 340 Q200 352 300 340 L290 206 L338 196 L326 116 L280 96 Q200 128 120 96 Z'
+        # short sleeves end mid upper arm; body keeps the long-sleeve width down to the hem
+        body = ('M130 84 L76 104 L56 200 L108 212 L114 196 L112 340 Q200 352 288 340 L286 196 '
+                'L292 212 L344 200 L324 104 L270 84 Q200 118 130 84 Z')
     o = f'<path d="{body}" fill="{fill}" stroke="{dk}" stroke-width="2" stroke-linejoin="round"/>'
     if sleeves == 'long':
         # armhole seams (raglan for sweatshirts), inner sleeve fold
@@ -63,7 +65,9 @@ def top(c, neck='crew', zip=None, buttons=False, rib=False, cable=False, sweat=F
         o += f'<path d="M40 332 L92 342 L90 364 L37 354 Z M360 332 L308 342 L310 364 L363 354 Z" fill="{sh(c,-.08)}" stroke="{dk}" stroke-width="2" stroke-linejoin="round"/>'
         o += cuffrib(40, 334, 52, 20, dk) + cuffrib(308, 334, 52, 20, dk)
     else:
-        o += f'<path d="M62 196 L110 206 M338 196 L290 206" fill="none" stroke="{dk}" stroke-width="1.5"/>'
+        o += f'<path d="M114 196 L130 84 M286 196 L270 84" fill="none" stroke="{dk}" stroke-width="1.5" opacity=".6"/>'
+        o += f'<path d="M56 200 L108 212 L105 230 L52 218 Z M344 200 L292 212 L295 230 L348 218 Z" fill="{sh(c,-.08)}" stroke="{dk}" stroke-width="2" stroke-linejoin="round"/>'
+        o += cuffrib(56, 202, 50, 16, dk) + cuffrib(294, 202, 50, 16, dk)
     # hem band
     o += f'<path d="M112 340 Q200 352 288 340 L288 364 Q200 376 112 364 Z" fill="{sh(c,-.08)}" stroke="{dk}" stroke-width="2"/>'
     o += ''.join(f'<line x1="{x}" y1="{343+(x-200)**2/1900:.0f}" x2="{x}" y2="{365+(x-200)**2/1900:.0f}" stroke="{dk}" stroke-width="1" opacity=".45"/>' for x in range(120, 288, 9))

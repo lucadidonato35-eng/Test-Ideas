@@ -125,8 +125,10 @@ def with_shadow(im):
     return canvas
 
 # ---------------- the two render paths ----------------
-def make_garment(src, spec, base, surface=True, win=110, log=print):
-    """src: corrected cutout (RGBA). spec: draw.py template. base: template hex."""
+def make_garment(src, spec, base, surface=True, win=110, anchor=None, log=print):
+    """src: corrected cutout (RGBA). spec: draw.py template. base: template hex.
+    anchor: hex the fabric colour is pulled towards (75%); phone exposure under warm
+    light turns black to grey and cream to beige, the hex you give is the truth."""
     flat = np.array(draw.to_png(draw.render(spec, base, surface), CANVAS)).astype(float)
     frgb, fal = flat[..., :3], flat[..., 3]/255.
     H, W = fal.shape
@@ -136,6 +138,11 @@ def make_garment(src, spec, base, surface=True, win=110, log=print):
     sm = np.array(src.getchannel('A')) > 200
     scale = float(np.clip(garment_width(fal > 0.5)/garment_width(sm), 0.5, 2.0))
     tex = quilt(wins, H, W, scale)
+    if anchor:
+        med = np.median(np.array(src)[..., :3][sm].astype(float), 0)
+        gain = np.clip(hx(anchor)/np.maximum(med, 4), 0.35, 3.0)**0.75
+        tex = tex*gain
+        log(f'  colour: fabric median #{"".join("%02x" % int(v) for v in med)} pulled towards {anchor}')
     # SVG shading and detail relative to its base colour (ribbing, seams, collar, pockets)
     ratio = np.clip(frgb/np.maximum(basec, 8), 0, 3)
     out = tex*ratio
@@ -161,7 +168,8 @@ def render_piece(piece, src, log=print):
         return make_shoes(src)
     # kit sources are 560 px renders, a third of a phone cutout's resolution: smaller windows
     win = 72 if piece.get('source_kind') == 'kit' else 110
-    return make_garment(src, piece['template'], piece['base'], piece.get('surface', True), win, log)
+    anchor = piece['base'] if piece.get('source_kind') == 'photo' else None
+    return make_garment(src, piece['template'], piece['base'], piece.get('surface', True), win, anchor, log)
 
 # ---------------- outputs ----------------
 def export_webp(im, path):

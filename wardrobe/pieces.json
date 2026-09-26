@@ -120,7 +120,7 @@
   "short": "Cardigan",
   "cat": "top",
   "colour": "navy",
-  "hex": "#1F2638",
+  "hex": "#252A3C",
   "template": "cardigan:speck",
   "base": "#252a3c",
   "occasions": [
@@ -131,8 +131,8 @@
   "w": 3,
   "tex": "chunky",
   "source": "sources/cardigan.png",
-  "source_kind": "kit",
-  "surface": false
+  "source_kind": "photo",
+  "photo": "photos/cardigan.jpg"
  },
  {
   "key": "cream_crew",
@@ -178,7 +178,7 @@
   "short": "Sweatshirt",
   "cat": "top",
   "colour": "black",
-  "hex": "#191919",
+  "hex": "#1E1E20",
   "template": "crew:sweat",
   "base": "#1e1e20",
   "occasions": [
@@ -188,8 +188,8 @@
   "w": 2,
   "casual": 1,
   "source": "sources/si.png",
-  "source_kind": "kit",
-  "surface": false
+  "source_kind": "photo",
+  "photo": "photos/si.jpg"
  },
  {
   "key": "olive",
@@ -197,7 +197,7 @@
   "short": "Raglan",
   "cat": "top",
   "colour": "olive",
-  "hex": "#555B4B",
+  "hex": "#5A5E50",
   "template": "crew:sweat",
   "base": "#5a5e50",
   "occasions": [
@@ -206,8 +206,8 @@
   "w": 1,
   "casual": 1,
   "source": "sources/olive.png",
-  "source_kind": "kit",
-  "surface": false
+  "source_kind": "photo",
+  "photo": "photos/olive.jpg"
  },
  {
   "key": "brown_tr",
