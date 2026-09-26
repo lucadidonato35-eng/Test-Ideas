@@ -1,0 +1,427 @@
+[
+ {
+  "key": "hb_coat",
+  "name": "Herringbone coat",
+  "short": "Coat",
+  "cat": "outer",
+  "colour": "grey",
+  "hex": "#5C5F67",
+  "template": "coat:herringbone,buttons=3",
+  "base": "#3a3a40",
+  "occasions": [
+   "Office",
+   "Evening",
+   "Weekend"
+  ],
+  "w": 3,
+  "tex": "pattern",
+  "source": "sources/hb_coat.png",
+  "source_kind": "kit",
+  "surface": false
+ },
+ {
+  "key": "check_coat",
+  "name": "Grey check coat",
+  "short": "Coat",
+  "cat": "outer",
+  "colour": "grey",
+  "hex": "#6B6C71",
+  "template": "coat:check,buttons=3",
+  "base": "#5a574f",
+  "occasions": [
+   "Office",
+   "Evening",
+   "Weekend"
+  ],
+  "w": 3,
+  "tex": "pattern",
+  "source": "sources/check_coat.png",
+  "source_kind": "kit",
+  "surface": false
+ },
+ {
+  "key": "black_coat",
+  "name": "Black coat",
+  "short": "Coat",
+  "cat": "outer",
+  "colour": "black",
+  "hex": "#1D1B1C",
+  "template": "coat",
+  "base": "#1c1a1d",
+  "occasions": [
+   "Office",
+   "Evening"
+  ],
+  "w": 3,
+  "source": "sources/black_coat.png",
+  "source_kind": "kit",
+  "surface": false
+ },
+ {
+  "key": "puffer",
+  "name": "Puffer jacket",
+  "short": "Puffer",
+  "cat": "outer",
+  "colour": "dark",
+  "hex": "#4A4543",
+  "template": "puffer",
+  "base": "#3e2f2a",
+  "occasions": [
+   "Weekend"
+  ],
+  "w": 3,
+  "casual": 1,
+  "source": "sources/puffer.png",
+  "source_kind": "kit",
+  "surface": false
+ },
+ {
+  "key": "grey_polo",
+  "name": "Grey open-collar knit",
+  "short": "Knit polo",
+  "cat": "top",
+  "colour": "grey",
+  "hex": "#7C7A74",
+  "template": "polo:rib",
+  "base": "#8a8783",
+  "occasions": [
+   "Office",
+   "Evening",
+   "Weekend"
+  ],
+  "w": 2,
+  "source": "sources/grey_polo.png",
+  "source_kind": "kit",
+  "surface": false
+ },
+ {
+  "key": "zip",
+  "name": "Charcoal zip knit",
+  "short": "Zip knit",
+  "cat": "top",
+  "colour": "grey",
+  "hex": "#4F545C",
+  "template": "zip:rib",
+  "base": "#4d5262",
+  "occasions": [
+   "Office",
+   "Evening",
+   "Weekend"
+  ],
+  "w": 3,
+  "tex": "chunky",
+  "source": "sources/zip.png",
+  "source_kind": "kit",
+  "surface": false
+ },
+ {
+  "key": "cardigan",
+  "name": "Navy cardigan",
+  "short": "Cardigan",
+  "cat": "top",
+  "colour": "navy",
+  "hex": "#1F2638",
+  "template": "cardigan:speck",
+  "base": "#252a3c",
+  "occasions": [
+   "Office",
+   "Evening",
+   "Weekend"
+  ],
+  "w": 3,
+  "tex": "chunky",
+  "source": "sources/cardigan.png",
+  "source_kind": "kit",
+  "surface": false
+ },
+ {
+  "key": "cream_crew",
+  "name": "Cream crewneck",
+  "short": "Knit",
+  "cat": "top",
+  "colour": "cream",
+  "hex": "#E6DFD1",
+  "template": "crew",
+  "base": "#e9e2d2",
+  "occasions": [
+   "Office",
+   "Evening",
+   "Weekend"
+  ],
+  "w": 2,
+  "source": "sources/cream_crew.png",
+  "source_kind": "kit",
+  "surface": false
+ },
+ {
+  "key": "white_rib",
+  "name": "White ribbed knit",
+  "short": "Rib knit",
+  "cat": "top",
+  "colour": "white",
+  "hex": "#F3F0EA",
+  "template": "crew:rib",
+  "base": "#f2f0ea",
+  "occasions": [
+   "Office",
+   "Evening",
+   "Weekend"
+  ],
+  "w": 1,
+  "source": "sources/white_rib.png",
+  "source_kind": "kit",
+  "surface": false
+ },
+ {
+  "key": "si",
+  "name": "Black sweatshirt",
+  "short": "Sweatshirt",
+  "cat": "top",
+  "colour": "black",
+  "hex": "#191919",
+  "template": "crew:sweat",
+  "base": "#1e1e20",
+  "occasions": [
+   "Evening",
+   "Weekend"
+  ],
+  "w": 2,
+  "casual": 1,
+  "source": "sources/si.png",
+  "source_kind": "kit",
+  "surface": false
+ },
+ {
+  "key": "olive",
+  "name": "Olive raglan",
+  "short": "Raglan",
+  "cat": "top",
+  "colour": "olive",
+  "hex": "#555B4B",
+  "template": "crew:sweat",
+  "base": "#5a5e50",
+  "occasions": [
+   "Weekend"
+  ],
+  "w": 1,
+  "casual": 1,
+  "source": "sources/olive.png",
+  "source_kind": "kit",
+  "surface": false
+ },
+ {
+  "key": "brown_tr",
+  "name": "Brown trousers",
+  "short": "Trousers",
+  "cat": "bottom",
+  "colour": "brown",
+  "hex": "#5A3F30",
+  "template": "trousers",
+  "base": "#5b4032",
+  "occasions": [
+   "Office",
+   "Evening"
+  ],
+  "kind": "trouser",
+  "source": "sources/brown_tr.png",
+  "source_kind": "kit",
+  "surface": false
+ },
+ {
+  "key": "grey_tr",
+  "name": "Mid-grey trousers",
+  "short": "Trousers",
+  "cat": "bottom",
+  "colour": "grey",
+  "hex": "#7F7E7B",
+  "template": "trousers",
+  "base": "#8a8886",
+  "occasions": [
+   "Office",
+   "Evening"
+  ],
+  "kind": "trouser",
+  "source": "sources/grey_tr.png",
+  "source_kind": "kit",
+  "surface": false
+ },
+ {
+  "key": "charcoal",
+  "name": "Charcoal trousers",
+  "short": "Trousers",
+  "cat": "bottom",
+  "colour": "charcoal",
+  "hex": "#2C2D30",
+  "template": "trousers",
+  "base": "#2b2b2e",
+  "occasions": [
+   "Office",
+   "Evening"
+  ],
+  "kind": "trouser",
+  "source": "sources/charcoal.png",
+  "source_kind": "kit",
+  "surface": false
+ },
+ {
+  "key": "beige",
+  "name": "Beige chinos",
+  "short": "Chinos",
+  "cat": "bottom",
+  "colour": "beige",
+  "hex": "#C8BAA6",
+  "template": "chinos",
+  "base": "#c8b8a2",
+  "occasions": [
+   "Office",
+   "Evening",
+   "Weekend"
+  ],
+  "kind": "chino",
+  "source": "sources/beige.png",
+  "source_kind": "kit",
+  "surface": false
+ },
+ {
+  "key": "grey_jeans",
+  "name": "Grey washed jeans",
+  "short": "Jeans",
+  "cat": "bottom",
+  "colour": "grey",
+  "hex": "#76726C",
+  "template": "denim",
+  "base": "#7d7873",
+  "occasions": [
+   "Evening",
+   "Weekend"
+  ],
+  "kind": "denim",
+  "source": "sources/grey_jeans.png",
+  "source_kind": "kit",
+  "surface": false
+ },
+ {
+  "key": "blue_jeans",
+  "name": "Mid-blue jeans",
+  "short": "Jeans",
+  "cat": "bottom",
+  "colour": "blue",
+  "hex": "#6C87A5",
+  "template": "denim",
+  "base": "#6b86a6",
+  "occasions": [
+   "Weekend"
+  ],
+  "kind": "denim",
+  "source": "sources/blue_jeans.png",
+  "source_kind": "kit",
+  "surface": false
+ },
+ {
+  "key": "black_loaf",
+  "name": "Black penny loafers",
+  "short": "Loafers",
+  "cat": "shoes",
+  "colour": "black",
+  "hex": "#151515",
+  "template": "loafer:penny",
+  "base": "#1b1a1a",
+  "occasions": [
+   "Office",
+   "Evening"
+  ],
+  "style": "loafer",
+  "source": "sources/black_loaf.png",
+  "source_kind": "kit",
+  "surface": false
+ },
+ {
+  "key": "brown_loaf",
+  "name": "Brown loafers",
+  "short": "Loafers",
+  "cat": "shoes",
+  "colour": "brown",
+  "hex": "#4A2C22",
+  "template": "loafer",
+  "base": "#4a2c22",
+  "occasions": [
+   "Office",
+   "Evening",
+   "Weekend"
+  ],
+  "style": "loafer",
+  "source": "sources/brown_loaf.png",
+  "source_kind": "kit",
+  "surface": false
+ },
+ {
+  "key": "chelsea",
+  "name": "Brown Chelsea boots",
+  "short": "Boots",
+  "cat": "shoes",
+  "colour": "brown",
+  "hex": "#3B2621",
+  "template": "chelsea",
+  "base": "#3b241f",
+  "occasions": [
+   "Office",
+   "Evening",
+   "Weekend"
+  ],
+  "style": "boot",
+  "source": "sources/chelsea.png",
+  "source_kind": "kit",
+  "surface": false
+ },
+ {
+  "key": "bw_sn",
+  "name": "Black/white sneakers",
+  "short": "Sneakers",
+  "cat": "shoes",
+  "colour": "black",
+  "hex": "#222222",
+  "template": "sneaker:stripe=#f4f2ee,sole=#f4f2ee",
+  "base": "#1c1c1e",
+  "occasions": [
+   "Weekend"
+  ],
+  "style": "sneaker",
+  "source": "sources/bw_sn.png",
+  "source_kind": "kit",
+  "surface": false
+ },
+ {
+  "key": "polo_sn",
+  "name": "Beige suede sneakers",
+  "short": "Sneakers",
+  "cat": "shoes",
+  "colour": "beige",
+  "hex": "#CBBFAE",
+  "template": "sneaker:sole=#c9a67a",
+  "base": "#d9cbb8",
+  "occasions": [
+   "Weekend"
+  ],
+  "style": "sneaker",
+  "source": "sources/polo_sn.png",
+  "source_kind": "kit",
+  "surface": false
+ },
+ {
+  "key": "nb",
+  "name": "New Balance runners",
+  "short": "Sneakers",
+  "cat": "shoes",
+  "colour": "grey",
+  "hex": "#9A9EA3",
+  "template": "runner:accent=#7fa6c9",
+  "base": "#9c9ea3",
+  "occasions": [
+   "Weekend"
+  ],
+  "style": "sneaker",
+  "source": "sources/nb.png",
+  "source_kind": "kit",
+  "surface": false
+ }
+]

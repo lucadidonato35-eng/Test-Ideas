@@ -1,0 +1,202 @@
+{
+ "looks": [
+  {
+   "name": "Warm Italian",
+   "occ": "Office",
+   "pcs": [
+    "hb_coat",
+    "grey_polo",
+    "brown_tr",
+    "brown_loaf"
+   ],
+   "why": "Cool grey on top, warm brown below. The herringbone ties both together."
+  },
+  {
+   "name": "Clean Contrast",
+   "occ": "Office",
+   "pcs": [
+    "black_coat",
+    "cream_crew",
+    "grey_tr",
+    "black_loaf"
+   ],
+   "why": "Cream against black reads sharp and calm. Good for a board day."
+  },
+  {
+   "name": "Soft Tailoring",
+   "occ": "Office",
+   "pcs": [
+    "check_coat",
+    "white_rib",
+    "grey_tr",
+    "chelsea"
+   ],
+   "why": "The check coat does the talking. A smooth white rib keeps it clean, boots handle wet streets."
+  },
+  {
+   "name": "Minimal & Sharp",
+   "occ": "Office",
+   "pcs": [
+    "black_coat",
+    "white_rib",
+    "charcoal",
+    "black_loaf"
+   ],
+   "why": "Near-monochrome with one bright layer at the neck. The sharpest look you own."
+  },
+  {
+   "name": "Relaxed but Deliberate",
+   "occ": "Evening",
+   "pcs": [
+    "black_coat",
+    "zip",
+    "grey_jeans",
+    "black_loaf"
+   ],
+   "why": "Grey denim and polished loafers lift the zip knit for dinner."
+  },
+  {
+   "name": "Tonal Warm",
+   "occ": "Evening",
+   "pcs": [
+    "hb_coat",
+    "cream_crew",
+    "brown_tr",
+    "brown_loaf"
+   ],
+   "why": "Cream, brown and the oatmeal fleck in the coat. Expensive-looking with no effort."
+  },
+  {
+   "name": "Dark & Refined",
+   "occ": "Evening",
+   "pcs": [
+    "black_coat",
+    "si",
+    "charcoal",
+    "black_loaf"
+   ],
+   "why": "All dark, three textures. Swap to the white rib if the place is formal."
+  },
+  {
+   "name": "City Weekend",
+   "occ": "Weekend",
+   "pcs": [
+    "puffer",
+    "si",
+    "blue_jeans",
+    "bw_sn"
+   ],
+   "why": "Black, denim and white soles. Warm enough for a grey Saturday."
+  },
+  {
+   "name": "Earth Tones",
+   "occ": "Weekend",
+   "pcs": [
+    "puffer",
+    "olive",
+    "beige",
+    "polo_sn"
+   ],
+   "why": "Olive, beige and suede sit in the same muted family."
+  },
+  {
+   "name": "Laid-Back Layering",
+   "occ": "Weekend",
+   "pcs": [
+    null,
+    "cardigan",
+    "blue_jeans",
+    "chelsea"
+   ],
+   "why": "The cardigan works as the jacket on mild days. Add a white tee underneath."
+  },
+  {
+   "name": "Travel Day",
+   "occ": "Weekend",
+   "pcs": [
+    "puffer",
+    "zip",
+    "grey_jeans",
+    "nb"
+   ],
+   "why": "Zip for temperature changes, runners for the airport walk."
+  }
+ ],
+ "gb": [
+  {
+   "good": [
+    "white_rib",
+    "grey_tr",
+    "black_loaf"
+   ],
+   "better": [
+    "cardigan",
+    "grey_tr",
+    "black_loaf"
+   ],
+   "gl": "White + grey",
+   "bl": "Navy + grey",
+   "note": "Navy gives grey trousers depth. White on grey can look washed out."
+  },
+  {
+   "good": [
+    "si",
+    "charcoal",
+    "black_loaf"
+   ],
+   "better": [
+    "cream_crew",
+    "charcoal",
+    "black_loaf"
+   ],
+   "gl": "Black + charcoal",
+   "bl": "Cream + charcoal",
+   "note": "All dark reads flat. A light top adds contrast and draws focus to your face."
+  },
+  {
+   "good": [
+    "olive",
+    "charcoal",
+    "black_loaf"
+   ],
+   "better": [
+    "olive",
+    "blue_jeans",
+    "chelsea"
+   ],
+   "gl": "Olive + near-black",
+   "bl": "Olive + blue",
+   "note": "Olive softens beside blue denim and brown boots. Near-black makes it look drab."
+  },
+  {
+   "good": [
+    "si",
+    "brown_tr",
+    "brown_loaf"
+   ],
+   "better": [
+    "grey_polo",
+    "brown_tr",
+    "brown_loaf"
+   ],
+   "gl": "Black + brown",
+   "bl": "Grey + brown",
+   "note": "Black fights brown. Grey bridges it and keeps the look warm."
+  },
+  {
+   "good": [
+    "zip",
+    "blue_jeans",
+    "nb"
+   ],
+   "better": [
+    "zip",
+    "grey_jeans",
+    "black_loaf"
+   ],
+   "gl": "Charcoal + blue",
+   "bl": "Charcoal + grey",
+   "note": "Tonal greys with loafers turn a weekend knit into an evening look."
+  }
+ ]
+}

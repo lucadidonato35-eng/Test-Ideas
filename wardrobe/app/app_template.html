@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Autumn Closet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@400;500;600&display=swap">
+<style>
+/* Single warm-studio look, used in both themes on purpose */
+:root{
+  color-scheme:light;
+  --bg:#EDE8E1;--panel:#F6F3EE;--tile:#EFEAE3;--ink:#1D1B19;--mute:#6F685F;--line:#DCD4C9;
+  --accent:#1F2A44;--good:#3E6A47;--warn:#8F5620;--bad:#963838;--shadow:rgba(40,30,20,.22);
+  --serif:"Cormorant Garamond","Iowan Old Style",Georgia,serif;
+  --sans:"Jost",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink);margin:0}
+body{font-family:var(--sans);font-size:15px;line-height:1.45;-webkit-text-size-adjust:100%}
+.app{max-width:430px;margin:0 auto;padding-inline:16px;padding-block:22px 80px}
+header{text-align:center}
+h1{font-family:var(--serif);font-weight:500;font-size:40px;line-height:1;margin:0;letter-spacing:.01em}
+.meta{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);margin-top:8px}
+.tabs{position:sticky;top:0;z-index:5;background:var(--bg);display:flex;gap:2px;padding-block:16px 12px;margin-inline:-16px;padding-inline:16px}
+.tab{flex:1 1 0;border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--mute);font:500 14px var(--sans);padding:8px 2px;cursor:pointer;white-space:nowrap}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom:2px solid var(--ink)}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:14px}
+.chip{border:1px solid var(--line);background:transparent;color:var(--ink);font:500 13px var(--sans);padding:6px 14px;border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--panel);border-color:var(--ink)}
+/* look card, flat-lay style */
+.look{background:var(--panel);border:1px solid var(--line);margin-bottom:18px;padding:18px 14px 14px}
+.look h2{font-family:var(--serif);font-weight:500;font-size:28px;line-height:1.1;margin:0;text-align:center;text-wrap:balance}
+.look h2 .no{color:var(--mute)}
+.sub{display:flex;justify-content:center;align-items:center;gap:10px;margin-top:6px}
+.tag{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.dots{display:inline-flex}
+.dots i{width:16px;height:16px;border-radius:50%;box-shadow:0 1px 3px var(--shadow);display:block}
+.dots i+i{margin-left:-5px}
+.fit{position:relative;aspect-ratio:1/1;max-width:100%;margin-top:6px}
+.fit img{position:absolute;object-fit:contain}
+.fit .t{left:1%;top:3%;width:52%;height:46%;z-index:3}
+.fit .o{left:47%;top:1%;width:52%;height:58%;z-index:2}
+.fit .b{left:6%;top:47%;width:42%;height:52%;z-index:1}
+.fit .s{left:52%;top:63%;width:44%;height:34%;z-index:4}
+.fit.noouter .t{left:4%;top:3%;width:58%;height:50%}
+.fit.noouter .b{left:8%;top:49%;width:44%;height:50%}
+.fit.noouter .s{left:54%;top:52%;width:44%;height:36%}
+.strip{display:grid;gap:6px;margin-top:10px}
+.strip figure{margin:0;background:var(--tile);padding:8px 4px 6px;text-align:center}
+.strip img{width:100%;aspect-ratio:1;object-fit:contain}
+.strip figcaption{font-size:12px;line-height:1.2;margin-top:4px}
+.why{font-family:var(--serif);font-size:18px;line-height:1.35;text-align:center;margin:12px 6px 4px;color:var(--ink)}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px}
+.checks{display:flex;flex-wrap:wrap;gap:4px}
+.ck{font-size:11px;padding:2px 7px;border:1px solid currentColor;border-radius:4px}
+.ck.ok{color:var(--good)}.ck.warn{color:var(--warn)}.ck.no{color:var(--bad)}
+.btn{border:0;background:var(--ink);color:var(--panel);font:500 13px var(--sans);padding:9px 16px;border-radius:999px;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+/* good vs better */
+.intro{font-family:var(--serif);font-size:19px;text-align:center;margin:0 0 14px;color:var(--mute)}
+.gb{background:var(--panel);border:1px solid var(--line);padding:16px 12px;margin-bottom:18px}
+.gb-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.gb-col{text-align:center}
+.gb-col .dots i{width:30px;height:30px}.gb-col .dots i+i{margin-left:-10px}
+.gb-col h3{font:600 24px/1 var(--sans);letter-spacing:-.03em;margin:8px 0 6px;text-transform:uppercase}
+.gb-col.better h3{color:var(--good)}
+.stack{display:flex;flex-direction:column;align-items:center;height:360px}
+.stack img{object-fit:contain;max-width:100%}
+.stack .st{height:38%}.stack .sb{height:44%;margin-top:-3%}.stack .ss{height:20%;margin-top:-4%}
+.gb-col p{font-size:13px;color:var(--mute);margin:6px 0 0}
+.gb-note{font-family:var(--serif);font-size:18px;text-align:center;margin:12px 4px 0}
+/* mix */
+.bfit{background:var(--panel);border:1px solid var(--line);padding:12px}
+.score{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-block:14px 6px;flex-wrap:wrap}
+.verdict{font-family:var(--serif);font-size:28px;line-height:1;font-weight:600}
+.verdict.ok{color:var(--good)}.verdict.warn{color:var(--warn)}.verdict.no{color:var(--bad)}
+.notes{margin:0 0 12px;padding:0;list-style:none;display:grid;gap:5px}
+.notes li{display:grid;grid-template-columns:18px 1fr;gap:6px;font-size:14px}
+.slot{display:grid;grid-template-columns:40px 1fr 40px;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);padding:8px;margin-bottom:6px}
+.slot .lab{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.slot .nm{font-weight:500}
+.slot .mid{display:grid;grid-template-columns:56px 1fr;gap:10px;align-items:center}
+.slot .mid img{width:56px;height:56px;object-fit:contain}
+.slot .none{width:56px;height:56px;border:1px dashed var(--line)}
+.arrow{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:18px;cursor:pointer}
+.season{display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;color:var(--mute);margin:-4px 0 14px}
+.rules{border-top:1px solid var(--line);margin-top:16px;padding-top:12px;font-size:14px;color:var(--mute)}
+.rules h3{font-family:var(--serif);font-weight:600;font-size:20px;color:var(--ink);margin:0 0 6px}
+.rules ul{margin:0;padding-left:18px;display:grid;gap:4px}
+.ready{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;scroll-snap-type:x mandatory}
+.mini{flex:0 0 124px;scroll-snap-align:start;background:var(--panel);border:1px solid var(--line);padding:6px;text-align:center;cursor:pointer;font:inherit;color:var(--ink)}
+.mini[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.mini .fit{margin:0}
+.mini span{display:block;font-size:12px;line-height:1.2;margin-top:4px}
+.lbl{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);margin:0 0 8px;text-align:center}
+/* closet */
+.sec{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);margin:18px 0 8px;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.piece{background:var(--panel);border:1px solid var(--line);padding:8px 6px;text-align:center;color:var(--ink);font:inherit;cursor:pointer}
+.piece img{width:100%;aspect-ratio:1;object-fit:contain}
+.piece .nm{font-size:12px;line-height:1.2;margin-top:4px}
+.piece .ct{font-size:11px;color:var(--mute)}
+.piece[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.hint{color:var(--mute);font-size:13px;text-align:center;margin:0}
+@media (max-width:380px){.stack{height:300px}.gb-col h3{font-size:20px}.look h2{font-size:25px}.tab{font-size:13px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>Autumn Closet</h1>
+    <div class="meta" id="meta"></div>
+  </header>
+  <nav class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" data-v="looks">Looks</button>
+    <button class="tab" role="tab" aria-selected="false" data-v="gb">Good vs Better</button>
+    <button class="tab" role="tab" aria-selected="false" data-v="build">Mix</button>
+    <button class="tab" role="tab" aria-selected="false" data-v="closet">Closet</button>
+  </nav>
+
+  <section id="v-looks">
+    <div class="chips" id="lookFilter"></div>
+    <div id="lookList"></div>
+  </section>
+
+  <section id="v-gb" hidden>
+    <p class="intro">Same trousers, one swap. Built only from pieces you own.</p>
+    <div id="gbList"></div>
+  </section>
+
+  <section id="v-build" hidden>
+    <p class="lbl">Occasion</p>
+    <div class="chips" id="occChips"></div>
+    <div class="season"><button class="chip" id="coldBtn" aria-pressed="true"></button></div>
+    <p class="lbl">Ready-made mixes · tap to load</p>
+    <div class="ready" id="ready"></div>
+    <div class="bfit"><div class="fit" id="bFit"></div></div>
+    <div class="score"><div class="verdict" id="bVerdict" aria-live="polite"></div>
+      <button class="btn" id="bShuffle">Shuffle</button></div>
+    <ul class="notes" id="bNotes"></ul>
+    <div id="slots"></div>
+    <div class="rules"><h3>How matches are scored</h3><ul id="ruleList"></ul></div>
+  </section>
+
+  <section id="v-closet" hidden>
+    <p class="hint">Tap a piece to see every look it works in.</p>
+    <div id="closet"></div>
+    <div id="closetLooks"></div>
+  </section>
+</div>
+
+<script>
+/*__RULES_JS__*/
+</script>
+<script>
+const DATA = /*__DATA__*/null;
+const IMG = DATA.images, R = DATA.rules, LOOKS = DATA.looks.looks, GB = DATA.looks.gb;
+const P = Object.fromEntries(DATA.pieces.map(p => [p.key, p]));
+const OCCS = R.occasions, SLOTS = ["outer","top","bottom","shoes"], SLOTN = {outer:"Outer",top:"Top",bottom:"Bottom",shoes:"Shoes"};
+const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const W = R.warmth, season = `${MON[W.months[0]-1]}–${MON[W.months[W.months.length-1]-1]}`;
+let cold = W.months.includes(new Date().getMonth()+1);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const byCat = c => DATA.pieces.filter(p => p.cat === c).map(p => p.key);
+const dots = ks => `<span class="dots">${ks.filter(Boolean).map(k => `<i style="background:${P[k].hex}" title="${esc(P[k].colour)}"></i>`).join("")}</span>`;
+const check = (pcs, occ) => Rules.check(pcs, P, R, occ, cold);
+const verdict = res => Rules.verdict(res, R);
+meta.textContent = `${W.place} · ${DATA.pieces.length} pieces · ${LOOKS.length} looks`;
+
+function fitHTML(pcs){
+  const [o,t,b,s] = pcs;
+  const im = (k,c) => k && P[k] ? `<img class="${c}" src="${IMG[k]}" alt="${esc(P[k].name)}">` : "";
+  return {cls: o ? "fit" : "fit noouter", html: im(o,"o")+im(b,"b")+im(t,"t")+im(s,"s")};
+}
+function lookCard(L){
+  const i = LOOKS.indexOf(L), f = fitHTML(L.pcs), res = check(L.pcs, L.occ);
+  const order = [L.pcs[1],L.pcs[0],L.pcs[2],L.pcs[3]].filter(Boolean);
+  return `<article class="look">
+  <h2><span class="no">${i+1}.</span> ${esc(L.name)}</h2>
+  <div class="sub">${dots([L.pcs[1],L.pcs[2]])}<span class="tag">${L.occ}</span></div>
+  <div class="${f.cls}">${f.html}</div>
+  <div class="strip" style="grid-template-columns:repeat(${order.length},1fr)">${order.map(k => `<figure><img src="${IMG[k]}" alt=""><figcaption>${esc(P[k].short)}</figcaption></figure>`).join("")}</div>
+  <p class="why">${esc(L.why)}</p>
+  <div class="foot"><div class="checks">${res.map(r => `<span class="ck ${r.lvl}" title="${esc(r.msg)}">${r.short}</span>`).join("")}</div>
+  <button class="btn ghost" data-edit="${i}">Remix</button></div></article>`;
+}
+/* looks */
+let filt = "All";
+function renderLooks(){
+  lookFilter.innerHTML = ["All",...OCCS].map(c => `<button class="chip" aria-pressed="${c===filt}" data-f="${c}">${c}</button>`).join("");
+  lookList.innerHTML = LOOKS.filter(L => filt==="All" || L.occ===filt).map(lookCard).join("");
+}
+lookFilter.onclick = e => { const f = e.target.dataset.f; if (f) { filt = f; renderLooks(); } };
+document.addEventListener("click", e => { const b = e.target.closest("[data-edit]"); if (b) { const L = LOOKS[+b.dataset.edit]; occ = L.occ; cur = [...L.pcs]; show("build"); renderBuild(); } });
+/* good vs better */
+const stack = ([t,b,s]) => `<div class="stack"><img class="st" src="${IMG[t]}" alt="${esc(P[t].name)}"><img class="sb" src="${IMG[b]}" alt="${esc(P[b].name)}"><img class="ss" src="${IMG[s]}" alt="${esc(P[s].name)}"></div>`;
+gbList.innerHTML = GB.map(g => `<article class="gb"><div class="gb-row">
+  <div class="gb-col">${dots([g.good[0],g.good[1]])}<h3>Good</h3>${stack(g.good)}<p>${esc(g.gl)}</p></div>
+  <div class="gb-col better">${dots([g.better[0],g.better[1]])}<h3>Better</h3>${stack(g.better)}<p>${esc(g.bl)}</p></div>
+  </div><p class="gb-note">${esc(g.note)}</p></article>`).join("");
+/* mix */
+let occ = OCCS[0], cur = [...(LOOKS.find(L => L.occ===occ) || LOOKS[0]).pcs];
+const opts = c => { const o = byCat(c).filter(k => P[k].occasions.includes(occ)); return c==="outer" ? [null,...o] : o; };
+function renderBuild(){
+  occChips.innerHTML = OCCS.map(c => `<button class="chip" aria-pressed="${c===occ}" data-o="${c}">${c}</button>`).join("");
+  coldBtn.setAttribute("aria-pressed", cold);
+  coldBtn.textContent = cold ? `Cold months (${season}) · warmth rule on` : `Mild months · warmth rule off`;
+  ready.innerHTML = LOOKS.filter(L => L.occ===occ).map(L => { const f = fitHTML(L.pcs);
+    return `<button class="mini" aria-pressed="${L.pcs.join()===cur.join()}" data-l="${LOOKS.indexOf(L)}"><div class="${f.cls}">${f.html}</div><span>${esc(L.name)}</span></button>`; }).join("");
+  const f = fitHTML(cur); bFit.className = f.cls; bFit.innerHTML = f.html;
+  const res = check(cur, occ), v = verdict(res);
+  bVerdict.className = "verdict "+v.cls; bVerdict.textContent = v.txt;
+  bNotes.innerHTML = res.map(r => `<li><span style="color:var(--${r.lvl==="ok"?"good":r.lvl==="warn"?"warn":"bad"})">${r.lvl==="ok"?"✓":r.lvl==="warn"?"!":"✗"}</span><span>${esc(r.msg)}</span></li>`).join("");
+  slots.innerHTML = SLOTS.map((c,i) => { const k = cur[i]; return `<div class="slot"><button class="arrow" aria-label="Previous ${SLOTN[c]}" data-s="${i}" data-d="-1">‹</button>
+    <div class="mid">${k?`<img src="${IMG[k]}" alt="">`:`<div class="none"></div>`}<div><div class="lab">${SLOTN[c]}</div><div class="nm">${k?esc(P[k].name):"No outer layer"}</div></div></div>
+    <button class="arrow" aria-label="Next ${SLOTN[c]}" data-s="${i}" data-d="1">›</button></div>`; }).join("");
+}
+occChips.onclick = e => { const o = e.target.dataset.o; if (!o) return; occ = o; const L = LOOKS.find(L => L.occ===occ); if (L) cur = [...L.pcs]; renderBuild(); };
+coldBtn.onclick = () => { cold = !cold; renderBuild(); renderLooks(); };
+ready.onclick = e => { const b = e.target.closest(".mini"); if (!b) return; cur = [...LOOKS[+b.dataset.l].pcs]; renderBuild(); };
+slots.onclick = e => { const b = e.target.closest(".arrow"); if (!b) return; const i = +b.dataset.s, o = opts(SLOTS[i]);
+  let j = o.indexOf(cur[i]); j = j < 0 ? 0 : (j + +b.dataset.d + o.length) % o.length; cur[i] = o[j]; renderBuild(); };
+bShuffle.onclick = () => {
+  // every combination for this occasion that passes every rule, then pick one at random
+  const pool = []; const [A,B,C,D] = SLOTS.map(opts);
+  for (const a of A) for (const b of B) for (const c of C) for (const d of D) {
+    const pcs = [a,b,c,d]; if (pcs.join() !== cur.join() && verdict(check(pcs, occ)).cls === "ok") pool.push(pcs); }
+  if (pool.length) cur = pool[Math.floor(Math.random()*pool.length)];
+  renderBuild();
+};
+const S = R.shoes.pairs.map(p => p.say + ".");
+ruleList.innerHTML = [...S, R.clash.say, R.texture.say,
+  `Warmth (${season} in ${W.place}): outer + top weight at least ${W.min}; light knits need a coat.`,
+  "Each piece lists its occasions; anything outside the chosen one is flagged.",
+  `${R.verdict.strong}: every rule passes. ${R.verdict.tweak}: one warning. ${R.verdict.rethink}: shoes fail or two warnings.`
+].map(s => `<li>${esc(s)}</li>`).join("");
+/* closet */
+let sel = null;
+function renderCloset(){
+  closet.innerHTML = SLOTS.map(c => `<div class="sec">${SLOTN[c]}</div><div class="grid">${byCat(c).map(k => { const n = LOOKS.filter(L => L.pcs.includes(k)).length;
+    return `<button class="piece" aria-pressed="${sel===k}" data-k="${k}"><img src="${IMG[k]}" alt=""><div class="nm">${esc(P[k].name)}</div><div class="ct">${n} look${n===1?"":"s"}</div></button>`; }).join("")}</div>`).join("");
+  closetLooks.innerHTML = sel ? `<div class="sec">Looks with ${esc(P[sel].name.toLowerCase())}</div>` +
+    (LOOKS.filter(L => L.pcs.includes(sel)).map(lookCard).join("") || `<p class="hint">No saved look yet. Open Mix and step through with this piece.</p>`) : "";
+}
+closet.onclick = e => { const b = e.target.closest(".piece"); if (!b) return; sel = sel===b.dataset.k ? null : b.dataset.k; renderCloset(); if (sel) closetLooks.scrollIntoView({behavior:"smooth",block:"start"}); };
+function show(v){ document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", t.dataset.v===v)); ["looks","gb","build","closet"].forEach(x => document.getElementById("v-"+x).hidden = x!==v); try { localStorage.setItem("ac_tab", v); } catch (e) {} window.scrollTo(0,0); }
+document.querySelector(".tabs").onclick = e => { const v = e.target.dataset.v; if (v) show(v); };
+renderLooks(); renderBuild(); renderCloset();
+try { const t = localStorage.getItem("ac_tab"); if (t) show(t); } catch (e) {}
+</script>
+</body>
+</html>

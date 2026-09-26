@@ -1,0 +1,62 @@
+{
+  "_help": "Matching rules, read by the app and by pipeline/rules.py. A selector matches a piece when every listed field has one of the listed values. Fields come from pieces.json: colour, kind (trouser|chino|denim), style (loafer|boot|sneaker), tex (pattern|chunky), w (warmth weight), casual.",
+
+  "occasions": ["Office", "Evening", "Weekend"],
+
+  "shoes": {
+    "_help": "First entry whose 'shoes' selector matches decides. The trousers must match one of its 'with' selectors, else the look is a Rethink. Shoes matching no entry get a warning.",
+    "pairs": [
+      {"shoes": {"style": ["loafer"], "colour": ["black"]},
+       "with": [{"colour": ["grey", "charcoal"]}],
+       "say": "Black loafers want grey, charcoal or grey denim"},
+      {"shoes": {"style": ["loafer", "boot"], "colour": ["brown"]},
+       "with": [{"colour": ["brown", "beige", "blue", "grey"]}],
+       "say": "Brown leather wants brown, beige, blue or grey"},
+      {"shoes": {"style": ["sneaker"]},
+       "with": [{"kind": ["denim", "chino"]}],
+       "say": "Sneakers only with denim and chinos"}
+    ]
+  },
+
+  "clash": {
+    "_help": "Colour families that should not meet in one outfit. Each hit is a warning.",
+    "pairs": [["black", "brown"]],
+    "say": "Black and brown compete here. Keep one family."
+  },
+
+  "texture": {
+    "_help": "Only one texture hero: an outer with one of 'outer' and a top with one of 'top' together is a warning.",
+    "outer": ["pattern"],
+    "top": ["chunky"],
+    "say": "Patterned coat and chunky knit both shout. Pick one."
+  },
+
+  "warmth": {
+    "_help": "In the listed months (1=Jan) outer weight + top weight must reach 'min', and a top of weight <= 'light' needs an outer layer.",
+    "place": "Copenhagen",
+    "months": [10, 11, 12, 1, 2, 3],
+    "min": 3,
+    "light": 1,
+    "say_low": "Too light for Copenhagen Oct–Mar. Add a coat or a heavier knit.",
+    "say_light": "A light knit needs a coat this time of year."
+  },
+
+  "occasion": {
+    "_help": "Pieces whose 'occasions' list (pieces.json) lacks the chosen occasion are flagged.",
+    "say": "{names} {verb} off for {occasion}"
+  },
+
+  "dress_down": {
+    "_help": "A casual outer over tailoring, leather shoes and a non-casual top. Warning.",
+    "outer": {"casual": [1]},
+    "bottom": {"kind": ["trouser"]},
+    "say": "The puffer dresses tailoring down. Fine for the commute, swap coats at the office."
+  },
+
+  "verdict": {
+    "_help": "Any failed shoe rule = Rethink. Otherwise 0 warnings = Strong match, 1 = Works with one tweak, 2+ = Rethink.",
+    "strong": "Strong match",
+    "tweak": "Works with one tweak",
+    "rethink": "Rethink"
+  }
+}
