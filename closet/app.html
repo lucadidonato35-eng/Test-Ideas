@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#EDE8E1">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>Closet</title>
+<title>Copenhagen Closet</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@400;500;600&display=swap">
@@ -179,6 +179,7 @@ input[type=text],select{font:inherit;font-size:16px;padding:10px 12px;border:1px
 <script>
 "use strict";
 const DATA = /*__DATA__*/null;
+const HOSTED = !!window.CLOSET_HOSTED;   // published web page: no downloads, pop-ups or device location
 const R = DATA.rules, OCCS = R.occasions, SLOTS = ["outer","top","bottom","shoes"];
 const SLOTN = {outer:"Outer",top:"Top",bottom:"Bottom",shoes:"Shoes"}, CATN = {outer:"Outer",top:"Tops",bottom:"Bottoms",shoes:"Shoes"};
 const COLOURS = {black:"#1B1B1C",charcoal:"#2E2F33",grey:"#80807E",white:"#F1EFE9",cream:"#E6DFD1",beige:"#C8B8A2",taupe:"#7A6E62",camel:"#B08A5A",brown:"#5A3F30",navy:"#1F2638",blue:"#6B86A6",olive:"#5A5E4C",green:"#3F5A45",burgundy:"#5C2430",rust:"#8A4A2C",dark:"#3F3A38"};
@@ -355,7 +356,7 @@ function renderToday() {
     : `<div><div class="meta">${esc(w.place)} · ${WX[w.code] || ""}</div><div class="temp">${w.t}°</div><div class="small muted">${w.lo}° to ${w.hi}° today · ${cold ? "dress warm" : "light layers are fine"}</div></div>`;
   const worn = U.wear.filter(x => x.date === new Date().toISOString().slice(0, 10));
   $("v-today").innerHTML = `
-  <div class="card weather">${wx}<button class="btn soft" id="locBtn" aria-label="Use my location">📍</button></div>
+  <div class="card weather">${wx}${HOSTED ? "" : `<button class="btn soft" id="locBtn" aria-label="Use my location">📍</button>`}</div>
   <div class="lbl">Dressing for</div>
   <div class="chips">${OCCS.map(o => `<button class="chip" aria-pressed="${o === todayOcc}" data-o="${o}">${o}</button>`).join("")}</div>
   ${L ? `<div class="card today" style="margin-top:14px">
@@ -371,7 +372,7 @@ function renderToday() {
   </div>` : `<p class="empty">No Strong match for ${todayOcc.toLowerCase()} yet. Add pieces or relax a rule.</p>`}
   ${worn.length ? `<p class="small muted" style="text-align:center;margin-top:10px">Logged today: ${worn.map(x => esc(x.name)).join(", ")}</p>` : ""}`;
   $("v-today").querySelectorAll("[data-o]").forEach(b => b.onclick = () => { todayOcc = b.dataset.o; todayIdx = 0; todayList = null; renderToday(); });
-  $("locBtn").onclick = () => navigator.geolocation ? navigator.geolocation.getCurrentPosition(async p => {
+  if ($("locBtn")) $("locBtn").onclick = () => navigator.geolocation ? navigator.geolocation.getCurrentPosition(async p => {
       U.prefs.loc = {lat: +p.coords.latitude.toFixed(2), lon: +p.coords.longitude.toFixed(2), name: "Your location"}; await save("prefs");
       await loadWeather(); todayList = null; renderToday(); }, () => toast("Location not allowed")) : toast("No location on this device");
   if (!L) return;
@@ -425,7 +426,7 @@ function renderMix() {
     mix.cur = pool[Math.floor(Math.random() * pool.length)]; renderMix();
   };
   const saveLook = async asNew => {
-    const name = prompt("Name this look", editingLook && !asNew ? editingLook.name : autoName(mix.cur)); if (name === null) return;
+    const name = await askName(editingLook && !asNew ? "Update look" : "Save look", editingLook && !asNew ? editingLook.name : autoName(mix.cur)); if (name === null) return;
     const why = explain(mix.cur, mix.occ);
     if (editingLook && !asNew) {
       if (editingLook.mine) Object.assign(U.looks.find(L => L.id === editingLook.id), {name, pcs: [...mix.cur], occ: mix.occ, why});
@@ -507,7 +508,7 @@ function renderCloset() {
   root.querySelectorAll("[data-piece]").forEach(b => b.onclick = () => pieceSheet(b.dataset.piece));
   $("addBtn").onclick = addFlow;
   $("expBtn").onclick = exportData; $("impBtn").onclick = importData;
-  $("resetBtn").onclick = async () => { if (!confirm("Remove all your edits, added pieces, saved looks and wear log?")) return;
+  $("resetBtn").onclick = async () => { if (!await confirmSheet("Reset your edits?", "This removes your edits, added pieces, saved looks and wear log from this phone. Export first if you want a copy.", "Reset")) return;
     U = {pieces:{}, hidden:[], looks:[], hiddenLooks:[], wear:[], prefs:{mode:"best", view:{}, loc:null}}; await save(); todayList = null; render(); toast("Back to the original closet"); };
 }
 function typeOf(p) {
@@ -566,7 +567,7 @@ function pieceSheet(k) {
       const fx = [undefined, undefined, undefined, undefined]; fx[i] = k; const pool = combos(occ, fx);
       const pcs = pool.length ? pool[Math.floor(Math.random() * pool.length)] : (() => { const c = [...(mix.cur || allLooks()[0].pcs)]; c[i] = k; return c; })();
       mix.locks = [false, false, false, false]; mix.locks[i] = true; mix.cur = pcs; mix.occ = occ; mix.editing = null; show("mix"); };
-    $("psHide").onclick = async () => { if (!confirm(`Remove ${p.name} from the closet? Looks that use it are hidden too.`)) return;
+    $("psHide").onclick = async e => { const b = e.currentTarget; if (!b.dataset.sure) { b.dataset.sure = 1; b.textContent = "Tap again to remove"; b.classList.remove("ghost"); return; }
       if (P[k].userAdded) delete U.pieces[k]; else U.hidden.push(k); await save("pieces"); todayList = null; closeSheet(); render(); toast("Removed"); };
     $("sheetBody").querySelectorAll("[data-look]").forEach(b => b.onclick = () => lookSheet(b.dataset.look));
   };
@@ -607,7 +608,9 @@ async function prepare(blobOrUrl, cut) {
 let bgLib = null;
 async function cutout(file, onProgress) {
   if (!bgLib) bgLib = await import("https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/+esm");
-  return bgLib.removeBackground(file, {model: "small", output: {format: "image/png"}, progress: onProgress});
+  const cfg = {model: "small", output: {format: "image/png"}, progress: onProgress};
+  if (HOSTED) cfg.publicPath = new URL("model/", location.href).href;   // model files published next to the page
+  return bgLib.removeBackground(file, cfg);
 }
 function addFlow() {
   openSheet(`<h3>Add a piece</h3>
@@ -697,10 +700,12 @@ async function renderCard(draw, name) {
   const c = document.createElement("canvas"); c.width = 1080; c.height = 1350; const x = c.getContext("2d");
   x.fillStyle = "#EDE8E1"; x.fillRect(0, 0, 1080, 1350);
   await draw(x);
-  const blob = await new Promise(r => c.toBlob(r, "image/png"));
-  const file = new File([blob], name + ".png", {type: "image/png"});
-  if (navigator.canShare && navigator.canShare({files: [file]})) { try { await navigator.share({files: [file], title: name}); return; } catch (e) { if (e.name === "AbortError") return; } }
-  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = file.name; a.click();
+  const url = c.toDataURL("image/png");
+  if (!HOSTED) try { const blob = await (await fetch(url)).blob(), file = new File([blob], name + ".png", {type: "image/png"});
+    if (navigator.canShare && navigator.canShare({files: [file]})) { await navigator.share({files: [file], title: name}); return; } } catch (e) { if (e.name === "AbortError") return; }
+  openSheet(`<h3>Share</h3><img class="big" src="${url}" alt="${esc(name)}" style="aspect-ratio:4/5">
+    <p class="small muted">Press and hold the image to save it to your photos, then post it anywhere.</p>
+    ${HOSTED ? "" : `<a class="btn soft" href="${url}" download="${esc(name)}.png">Download</a>`}`);
 }
 const BOX = {t: [.01, .03, .52, .46], o: [.47, .01, .52, .58], b: [.06, .47, .42, .52], s: [.52, .63, .44, .34]};
 const BOXN = {t: [.04, .03, .58, .50], b: [.08, .49, .44, .50], s: [.54, .52, .44, .36]};
@@ -734,21 +739,51 @@ function wrapText(x, text, cx, y, maxW, lh) { const words = String(text).split("
   for (const w of words) { const t = line ? line + " " + w : w; if (x.measureText(t).width > maxW && line) { lines.push(line); line = w; } else line = t; }
   if (line) lines.push(line); lines.slice(0, 3).forEach((l, i) => x.fillText(l, cx, y + i * lh)); }
 
+/* ---------------- in-page dialogs (the web viewer blocks prompt/confirm) ---------------- */
+function askName(title, value) { return new Promise(res => {
+  openSheet(`<h3>${esc(title)}</h3><div class="field"><label for="askIn">Name</label><input type="text" id="askIn" maxlength="40" value="${esc(value)}"></div>
+    <div class="row" style="margin-top:14px"><button class="btn" id="askOk">Save</button><button class="btn ghost" id="askNo">Cancel</button></div>`);
+  const done = v => { sheetCancel = null; closeSheet(); res(v); };
+  $("askOk").onclick = () => done($("askIn").value.trim() || value);
+  $("askNo").onclick = () => done(null);
+  $("askIn").onkeydown = e => { if (e.key === "Enter") done($("askIn").value.trim() || value); };
+  sheetCancel = () => res(null);
+}); }
+function confirmSheet(title, text, ok) { return new Promise(res => {
+  openSheet(`<h3>${esc(title)}</h3><p class="small muted">${esc(text)}</p>
+    <div class="row" style="margin-top:14px"><button class="btn" id="cfOk" style="background:var(--bad)">${esc(ok)}</button><button class="btn ghost" id="cfNo">Cancel</button></div>`);
+  $("cfOk").onclick = () => { sheetCancel = null; closeSheet(); res(true); }; $("cfNo").onclick = () => { sheetCancel = null; closeSheet(); res(false); };
+  sheetCancel = () => res(false);
+}); }
+let sheetCancel = null;
+
 /* ---------------- sheet, backup, boot ---------------- */
-function openSheet(html) { $("sheetBody").innerHTML = html; $("sheet").classList.add("open"); document.body.style.overflow = "hidden"; $("sheet").querySelector(".panel").scrollTop = 0; }
-function closeSheet() { $("sheet").classList.remove("open"); document.body.style.overflow = ""; }
+function openSheet(html) { if (sheetCancel) { const c = sheetCancel; sheetCancel = null; c(); } $("sheetBody").innerHTML = html; $("sheet").classList.add("open"); document.body.style.overflow = "hidden"; $("sheet").querySelector(".panel").scrollTop = 0; }
+function closeSheet() { if (sheetCancel) { const c = sheetCancel; sheetCancel = null; c(); } $("sheet").classList.remove("open"); document.body.style.overflow = ""; }
 $("sheet").querySelector(".scrim").onclick = closeSheet; $("sheet").querySelector(".close").onclick = closeSheet;
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheet(); });
 function exportData() {
-  const blob = new Blob([JSON.stringify({app: "closet", version: 1, exported: new Date().toISOString(), ...U})], {type: "application/json"});
-  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `closet-backup-${new Date().toISOString().slice(0, 10)}.json`; a.click();
+  const json = JSON.stringify({app: "closet", version: 1, exported: new Date().toISOString(), ...U});
+  const fname = `closet-backup-${new Date().toISOString().slice(0, 10)}.json`;
+  openSheet(`<h3>Backup</h3><p class="small muted" style="margin:0 0 8px">Your edits, added pieces, saved looks and wear log (${Math.round(json.length / 1024)} KB). Copy it into a note or a message to keep it, or to send it to Claude.</p>
+    <textarea id="expTxt" readonly style="width:100%;height:160px;font:12px ui-monospace,monospace;border:1px solid var(--line);border-radius:10px;padding:8px;background:var(--panel);color:var(--ink)"></textarea>
+    <div class="row" style="margin-top:10px"><button class="btn" id="expCopy">Copy</button>${HOSTED ? "" : `<a class="btn soft" id="expDl" download="${fname}">Download</a>`}</div>`);
+  $("expTxt").value = json;
+  if ($("expDl")) $("expDl").href = URL.createObjectURL(new Blob([json], {type: "application/json"}));
+  $("expCopy").onclick = async () => { try { await navigator.clipboard.writeText(json); toast("Copied"); } catch (e) { $("expTxt").select(); toast("Selected: copy it with your keyboard or menu"); } };
 }
 function importData() {
-  const inp = document.createElement("input"); inp.type = "file"; inp.accept = "application/json,.json";
-  inp.onchange = async () => { try { const j = JSON.parse(await inp.files[0].text()); if (j.app !== "closet") throw 0;
+  openSheet(`<h3>Import a backup</h3><p class="small muted" style="margin:0 0 8px">Paste a backup, or choose the file.</p>
+    <textarea id="impTxt" style="width:100%;height:140px;font:12px ui-monospace,monospace;border:1px solid var(--line);border-radius:10px;padding:8px;background:var(--panel);color:var(--ink)"></textarea>
+    <div class="row" style="margin-top:10px"><button class="btn" id="impGo">Restore</button><button class="btn soft" id="impFile">Choose file</button></div>`);
+  $("impGo").onclick = () => restore($("impTxt").value);
+  $("impFile").onclick = () => { const inp = document.createElement("input"); inp.type = "file"; inp.accept = "application/json,.json";
+    inp.onchange = async () => restore(await inp.files[0].text()); inp.click(); };
+}
+async function restore(text) {
+  { try { const j = JSON.parse(text); if (j.app !== "closet") throw 0;
       U = {pieces: j.pieces || {}, hidden: j.hidden || [], looks: j.looks || [], hiddenLooks: j.hiddenLooks || [], wear: j.wear || [], prefs: j.prefs || {mode: "best", view: {}, loc: null}};
-      await save(); todayList = null; render(); toast("Backup restored"); } catch (e) { toast("That is not a Closet backup"); } };
-  inp.click();
+      await save(); todayList = null; closeSheet(); render(); toast("Backup restored"); } catch (e) { toast("That is not a Closet backup"); } }
 }
 document.querySelector("nav.tabs").onclick = e => { const b = e.target.closest("[data-v]"); if (b) show(b.dataset.v); };
 (async () => {

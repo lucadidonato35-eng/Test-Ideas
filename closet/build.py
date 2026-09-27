@@ -53,6 +53,13 @@ def build():
     html = html.replace('/*__RULES_JS__*/', rules_js).replace('/*__DATA__*/null', blob)
     out = os.path.join(HERE, 'index.html')
     open(out, 'w').write(html)
+    # web-page build for publishing: no document skeleton (the host adds it), hosted flag set
+    import re
+    head = re.search(r'<head>(.*?)</head>', html, re.S).group(1)
+    head = re.sub(r'<meta[^>]*>\s*', '', head)
+    body = re.search(r'<body>(.*)</body>', html, re.S).group(1)
+    page = head.strip()+'\n<script>window.CLOSET_HOSTED = true;</script>\n'+body.strip()+'\n'
+    open(os.path.join(HERE, 'artifact.html'), 'w').write(page)
     return out
 
 if __name__ == '__main__':
