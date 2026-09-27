@@ -14,6 +14,7 @@ When the user says "new piece" and attaches a photo (uploads land in `/root/.cla
 3. Run from `wardrobe/pipeline/`:
    `python add_piece.py PHOTO --name "..." --occasions office,evening [--template ... --hex ... --colour ... --weight N --texture ... --casual]`
    Add `--replace --key KEY` to re-shoot an existing piece (pass its existing occasions and flags again).
+   After changing the pipeline: `--reprocess all` (photo pieces, from `photos/`) and `--rerender all` (everything, from `sources/`).
    This writes `images/<key>.webp`, `sources/`, `photos/`, updates `pieces.json`, rebuilds `images/_sheet.jpg` and `app/index.html`, and prints looks that pass every rule.
 4. Pick 2–3 of the printed suggestions (or better ones), give each a name and a one-line "why", append them to `looks.json` → `looks`, then `python add_piece.py --build`.
 5. `python tests/test_rules.py` (from `wardrobe/`) must pass.

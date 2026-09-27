@@ -86,7 +86,10 @@ def keep_main(alpha, pair=False, log=print):
     km = ndimage.binary_dilation(km, iterations=r+1) & m        # restore edges lost to the opening
     km = ndimage.binary_fill_holes(km)
     log(f'  components: {n} found, kept {len(keep)}')
-    return alpha*km
+    # rembg drops confidence on bright highlights and leaves speckled holes inside the
+    # garment: everything well inside the outline is solid, only the edge keeps soft alpha
+    inner = ndimage.binary_erosion(km, iterations=3)
+    return np.where(inner, 1.0, alpha*km)
 
 def cutout(path, pair=False, log=print):
     im = load_photo(path)

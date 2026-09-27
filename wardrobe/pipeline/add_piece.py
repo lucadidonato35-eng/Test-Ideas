@@ -16,6 +16,7 @@ Only --name and --occasions are needed; the rest is inferred:
 
 Other modes:
     python add_piece.py --rerender KEY [KEY ...]   rebuild images from sources/ (or: all)
+    python add_piece.py --reprocess KEY [KEY ...]  redo cutout + correction from photos/ (or: all)
     python add_piece.py --build                    rebuild contact sheet and app only
 """
 import argparse, json, os, re, shutil, sys
@@ -122,6 +123,20 @@ def add(a):
     for occ_, pcs in rules.suggest(key):
         log(f'  {occ_:8} ' + ' + '.join(str(k) for k in pcs))
 
+def reprocess(keys):
+    """Whole chain again from the stored photo, keeping every setting in pieces.json."""
+    ps = load_pieces()
+    todo = [p for p in ps if p.get('photo') and (keys == ['all'] or p['key'] in keys)]
+    missing = set(keys)-{p['key'] for p in todo}-{'all'}
+    if missing: sys.exit(f'no stored photo for: {sorted(missing)}')
+    for p in todo:
+        log(f"[{p['key']}] reprocess {p['photo']}")
+        cut = cutout.cutout(os.path.join(ROOT, p['photo']), pair=(p['cat'] == 'shoes'), log=log)
+        src = prod.correct(cut, *prod.strength_for(p['template']))
+        src.save(os.path.join(ROOT, p['source']), optimize=True)
+        render(p, src)
+    build_outputs()
+
 def rerender(keys):
     ps = load_pieces()
     todo = ps if keys == ['all'] else [p for p in ps if p['key'] in keys]
@@ -145,9 +160,11 @@ def main():
     ap.add_argument('--casual', action='store_true')
     ap.add_argument('--replace', action='store_true', help='overwrite an existing key (re-shoot)')
     ap.add_argument('--rerender', nargs='+', metavar='KEY')
+    ap.add_argument('--reprocess', nargs='+', metavar='KEY')
     ap.add_argument('--build', action='store_true')
     a = ap.parse_args()
     if a.rerender: return rerender(a.rerender)
+    if a.reprocess: return reprocess(a.reprocess)
     if a.build: return build_outputs()
     if not (a.photo and a.name and a.occasions):
         ap.error('adding a piece needs a photo, --name and --occasions')

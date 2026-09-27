@@ -31,7 +31,14 @@ def texture_windows(src, size=110, n=36, log=print):
     # gradient at crease scale (folds, seams, shadows), not at weave scale
     gy, gx = np.gradient(ndimage.gaussian_filter(L, max(2, s/10)))
     grad = np.hypot(gx, gy)
-    outlier = (np.abs(L-med) > 4*mad).astype(float)     # buttons, pocket edges, labels
+    # outliers in brightness (buttons, labels) or in colour (ottoman strips the mask kept)
+    medc = np.median(rgb[al], 0)
+    cd = np.abs(rgb-medc).sum(-1)
+    cmad = np.median(cd[al])+1
+    outlier = ((np.abs(L-med) > 4*mad) | (cd > 5*cmad)).astype(float)
+    # crease-scale contrast: a fold or shadow edge shows as a big swing of the blurred image
+    Lb = ndimage.gaussian_filter(L, max(2, s/14))
+    swing = ndimage.maximum_filter(Lb, size=s//3)-ndimage.minimum_filter(Lb, size=s//3)
     er = ndimage.binary_erosion(al, iterations=s//2+2)
     if er.sum() < 50: er = ndimage.binary_erosion(al, iterations=max(2, s//6))
     ys, xs = np.where(er)
@@ -45,7 +52,8 @@ def texture_windows(src, size=110, n=36, log=print):
                  + 0.8*abs(win[:s//2].mean()-win[s//2:].mean())
                  + 0.8*abs(win[:, :s//2].mean()-win[:, s//2:].mean())
                  + 4*grad[y0:y0+s, x0:x0+s].mean()
-                 + 60*outlier[y0:y0+s, x0:x0+s].mean())
+                 + 60*outlier[y0:y0+s, x0:x0+s].mean()
+                 + 0.5*swing[y0:y0+s:4, x0:x0+s:4].max())
         cands.append((score, y0, x0))
     cands.sort()
     # greedy spread: skip windows overlapping an already chosen one by more than half
@@ -58,12 +66,12 @@ def texture_windows(src, size=110, n=36, log=print):
         if len(chosen) >= 30: break
         if c not in chosen: chosen.append(c)
     log(f'  fabric: {len(chosen)} windows of {s}px')
-    sig = max(4, s*0.13)
+    sig = max(4, s*0.065)     # strips creases and shadow edges, keeps rib and weave
     out = []
     for _, y0, x0 in chosen:
         p = rgb[y0:y0+s, x0:x0+s]
         lo = ndimage.gaussian_filter(p, (sig, sig, 0))
-        out.append(p-lo+p.reshape(-1, 3).mean(0))
+        out.append(p-lo+medc)      # every window on the garment's median colour: no patchwork
     return out
 
 def quilt(wins, H, W, scale, seed=7):
@@ -141,7 +149,9 @@ def make_garment(src, spec, base, surface=True, win=110, anchor=None, log=print)
     if anchor:
         med = np.median(np.array(src)[..., :3][sm].astype(float), 0)
         gain = np.clip(hx(anchor)/np.maximum(med, 4), 0.35, 3.0)**0.75
-        tex = tex*gain
+        # move the mean colour, keep the weave contrast as it is (scaling would amplify wrinkles)
+        tm = tex.reshape(-1, 3).mean(0)
+        tex = tm*gain+(tex-tm)
         log(f'  colour: fabric median #{"".join("%02x" % int(v) for v in med)} pulled towards {anchor}')
     # SVG shading and detail relative to its base colour (ribbing, seams, collar, pockets)
     ratio = np.clip(frgb/np.maximum(basec, 8), 0, 3)

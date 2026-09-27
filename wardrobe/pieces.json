@@ -81,8 +81,8 @@
   "short": "Knit polo",
   "cat": "top",
   "colour": "grey",
-  "hex": "#7C7A74",
-  "template": "polo:rib",
+  "hex": "#8A8783",
+  "template": "polo",
   "base": "#8a8783",
   "occasions": [
    "Office",
@@ -91,8 +91,8 @@
   ],
   "w": 2,
   "source": "sources/grey_polo.png",
-  "source_kind": "kit",
-  "surface": false
+  "source_kind": "photo",
+  "photo": "photos/grey_polo.jpg"
  },
  {
   "key": "zip",
@@ -100,9 +100,9 @@
   "short": "Zip knit",
   "cat": "top",
   "colour": "grey",
-  "hex": "#4F545C",
-  "template": "zip:rib",
-  "base": "#4d5262",
+  "hex": "#45474D",
+  "template": "zip",
+  "base": "#45474d",
   "occasions": [
    "Office",
    "Evening",
@@ -111,8 +111,8 @@
   "w": 3,
   "tex": "chunky",
   "source": "sources/zip.png",
-  "source_kind": "kit",
-  "surface": false
+  "source_kind": "photo",
+  "photo": "photos/zip.jpg"
  },
  {
   "key": "cardigan",
@@ -140,7 +140,7 @@
   "short": "Knit",
   "cat": "top",
   "colour": "cream",
-  "hex": "#E6DFD1",
+  "hex": "#E9E2D2",
   "template": "crew",
   "base": "#e9e2d2",
   "occasions": [
@@ -150,8 +150,8 @@
   ],
   "w": 2,
   "source": "sources/cream_crew.png",
-  "source_kind": "kit",
-  "surface": false
+  "source_kind": "photo",
+  "photo": "photos/cream_crew.jpg"
  },
  {
   "key": "white_rib",
@@ -159,8 +159,8 @@
   "short": "Rib knit",
   "cat": "top",
   "colour": "white",
-  "hex": "#F3F0EA",
-  "template": "crew:rib",
+  "hex": "#F2F0EA",
+  "template": "crew",
   "base": "#f2f0ea",
   "occasions": [
    "Office",
@@ -169,8 +169,8 @@
   ],
   "w": 1,
   "source": "sources/white_rib.png",
-  "source_kind": "kit",
-  "surface": false
+  "source_kind": "photo",
+  "photo": "photos/white_rib.jpg"
  },
  {
   "key": "si",

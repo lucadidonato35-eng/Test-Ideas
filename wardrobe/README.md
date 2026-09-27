@@ -24,7 +24,7 @@ python add_piece.py photo.jpg --key navy_cardigan --name "Navy cardigan" --cat t
 
 Only `--name` and `--occasions` are required; the rest is inferred (key from name, category
 from template, hex from the photo, colour name from hex). Re-shoot with `--replace`.
-Rebuild images from sources: `--rerender KEY|all`. Rebuild sheet and app only: `--build`.
+Rebuild images from sources: `--rerender KEY|all`. Redo the whole chain from stored photos: `--reprocess KEY|all`. Rebuild sheet and app only: `--build`.
 
 ## Pipeline
 
