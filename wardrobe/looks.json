@@ -120,6 +120,171 @@
     "nb"
    ],
    "why": "Zip for temperature changes, runners for the airport walk."
+  },
+  {
+   "name": "Navy & Oat",
+   "occ": "Evening",
+   "pcs": [
+    "hb_coat",
+    "navy_zip_polo",
+    "beige",
+    "chelsea"
+   ],
+   "why": "A navy knit polo under herringbone, lifted by pale chinos and brown boots."
+  },
+  {
+   "name": "Weekend Zip Polo",
+   "occ": "Weekend",
+   "pcs": [
+    "puffer",
+    "navy_zip_polo",
+    "blue_jeans",
+    "polo_sn"
+   ],
+   "why": "Navy and mid-blue denim sit in one family; suede sneakers keep it soft."
+  },
+  {
+   "name": "Navy Under Black",
+   "occ": "Office",
+   "pcs": [
+    "black_coat",
+    "navy_cable_polo",
+    "grey_tr",
+    "black_loaf"
+   ],
+   "why": "Navy cable knit, grey trousers, black coat: all cool tones, quiet and sharp."
+  },
+  {
+   "name": "Cable & Check",
+   "occ": "Evening",
+   "pcs": [
+    "check_coat",
+    "navy_cable_polo",
+    "grey_jeans",
+    "brown_loaf"
+   ],
+   "why": "The check coat carries the pattern, the cable knit adds texture underneath."
+  },
+  {
+   "name": "Cream & Check",
+   "occ": "Weekend",
+   "pcs": [
+    "check_coat",
+    "cream_polo",
+    "grey_jeans",
+    "brown_loaf"
+   ],
+   "why": "A cream polo brightens the grey check; brown loafers warm the whole look."
+  },
+  {
+   "name": "Pale Blue & Sand",
+   "occ": "Weekend",
+   "pcs": [
+    "hb_coat",
+    "light_blue_zip",
+    "beige",
+    "chelsea"
+   ],
+   "why": "Pale blue and sand are an easy pair; the herringbone adds weight for autumn."
+  },
+  {
+   "name": "Black Rib, Grey Tailoring",
+   "occ": "Evening",
+   "pcs": [
+    "black_coat",
+    "black_zip",
+    "grey_tr",
+    "black_loaf"
+   ],
+   "why": "Black on black up top, mid-grey trousers underneath for contrast."
+  },
+  {
+   "name": "Black & Sand",
+   "occ": "Weekend",
+   "pcs": [
+    null,
+    "black_zip",
+    "beige",
+    "bw_sn"
+   ],
+   "why": "A chunky black zip is warm enough alone; beige chinos stop it going severe."
+  },
+  {
+   "name": "Monochrome Office",
+   "occ": "Office",
+   "pcs": [
+    "check_coat",
+    "black_cardigan",
+    "grey_tr",
+    "black_loaf"
+   ],
+   "why": "Black cardigan, grey trousers, black loafers: the check coat is the only pattern."
+  },
+  {
+   "name": "Dark Layers",
+   "occ": "Evening",
+   "pcs": [
+    "hb_coat",
+    "black_cardigan",
+    "charcoal",
+    "black_loaf"
+   ],
+   "why": "Three dark layers in different textures read rich rather than flat."
+  },
+  {
+   "name": "Half-Zip Office",
+   "occ": "Office",
+   "pcs": [
+    null,
+    "navy_half_zip",
+    "grey_tr",
+    "brown_loaf"
+   ],
+   "why": "Navy and grey are the office default; a ribbed half-zip replaces the blazer."
+  },
+  {
+   "name": "Navy Night",
+   "occ": "Evening",
+   "pcs": [
+    "black_coat",
+    "navy_half_zip",
+    "charcoal",
+    "black_loaf"
+   ],
+   "why": "Navy between black and charcoal: dark, but not one flat block."
+  },
+  {
+   "name": "Denim & Herringbone",
+   "occ": "Weekend",
+   "pcs": [
+    "hb_coat",
+    "denim_shirt",
+    "beige",
+    "chelsea"
+   ],
+   "why": "A denim shirt under a wool coat, beige chinos to keep it off double denim."
+  },
+  {
+   "name": "Suede & Grey",
+   "occ": "Evening",
+   "pcs": [
+    "suede_bomber",
+    "grey_polo",
+    "beige",
+    "chelsea"
+   ],
+   "why": "Tan suede, grey knit and brown boots: warm and cool balanced."
+  },
+  {
+   "name": "Suede Weekend",
+   "occ": "Weekend",
+   "pcs": [
+    "suede_bomber",
+    "zip",
+    "blue_jeans",
+    "brown_loaf"
+   ],
+   "why": "Suede and denim are a classic; the charcoal zip keeps the palette calm."
   }
  ],
  "gb": [

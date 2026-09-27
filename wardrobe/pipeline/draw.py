@@ -170,6 +170,59 @@ def puffer(c, surface=True):
     o += f'<path d="M62 318 L106 326 L104 344 L58 336 Z M338 318 L294 326 L296 344 L342 336 Z" fill="{sh(c,-.15)}" stroke="{dk}" stroke-width="2"/>'
     return wrap(o, defs)
 
+
+# ---------------- shirt / overshirt ----------------
+def shirt(c, pockets=2, snaps=False, surface=True):
+    """Long-sleeve shirt: point collar, button placket, yoke, chest flap pockets, buttoned cuffs."""
+    dk = sh(c, -.30); defs = grad('g', c)
+    body = ('M130 80 L76 100 Q58 190 42 330 L92 340 L114 196 L110 356 Q200 368 290 356 L286 196 '
+            'L308 340 L358 330 Q342 190 324 100 L270 80 Q200 100 130 80 Z')
+    o = f'<path d="{body}" fill="url(#g)" stroke="{dk}" stroke-width="2" stroke-linejoin="round"/>'
+    o += f'<path d="M114 196 L130 80 M286 196 L270 80" fill="none" stroke="{dk}" stroke-width="1.5" opacity=".6"/>'
+    o += f'<path d="M122 112 Q200 124 278 112" fill="none" stroke="{dk}" stroke-width="1.5" opacity=".6"/>'
+    # buttoned cuffs
+    o += f'<path d="M42 330 L92 340 L88 366 L38 356 Z M358 330 L308 340 L312 366 L362 356 Z" fill="{sh(c,-.06)}" stroke="{dk}" stroke-width="2" stroke-linejoin="round"/>'
+    # placket and buttons
+    o += f'<path d="M192 100 L192 362 M208 100 L208 362" stroke="{dk}" stroke-width="1.3" opacity=".7"/>'
+    btn = '#1a1817' if snaps else sh(c, -.4)
+    o += ''.join(f'<circle cx="200" cy="{y}" r="{5 if snaps else 4}" fill="{btn}" stroke="#0e0d0c" stroke-width=".8"/>' for y in range(128, 350, 44))
+    # chest pockets with flaps
+    for x in ([126, 222] if pockets == 2 else [126])[:pockets]:
+        o += f'<path d="M{x} 150 L{x+52} 150 L{x+52} 212 L{x+26} 220 L{x} 212 Z" fill="none" stroke="{dk}" stroke-width="1.5" opacity=".7"/>'
+        o += f'<path d="M{x-2} 146 L{x+54} 146 L{x+54} 164 L{x+26} 172 L{x-2} 164 Z" fill="{sh(c,-.05)}" stroke="{dk}" stroke-width="1.5"/>'
+        o += f'<circle cx="{x+26}" cy="162" r="3.5" fill="{btn}"/>'
+    # collar: inside of the neck, band plus two points
+    o += f'<path d="M130 80 Q200 60 270 80 Q200 104 130 80 Z" fill="{sh(c,-.35)}"/>'
+    o += f'<path d="M136 80 Q200 64 264 80 L262 90 Q200 76 138 90 Z" fill="{sh(c,-.08)}" stroke="{dk}" stroke-width="1.5"/>'
+    o += f'<path d="M138 84 L150 132 L194 104 L200 92 Z" fill="{sh(c,.05)}" stroke="{dk}" stroke-width="2" stroke-linejoin="round"/>'
+    o += f'<path d="M262 84 L250 132 L206 104 L200 92 Z" fill="{sh(c,.05)}" stroke="{dk}" stroke-width="2" stroke-linejoin="round"/>'
+    return wrap(o, defs)
+
+# ---------------- bomber ----------------
+def bomber(c, sleeves=None, surface=True):
+    """Bomber: ribbed collar, cuffs and hem band, zip, welt pockets. sleeves= a second colour
+    for two-tone jackets (e.g. suede body with knit sleeves)."""
+    dk = sh(c, -.35); defs = grad('g', c)
+    sc = sleeves or c; sdk = sh(sc, -.3)
+    rib = sh(sleeves or c, -.06)
+    arm_l = 'M150 84 L94 102 Q72 200 56 320 L104 330 L114 196 Z'
+    arm_r = 'M250 84 L306 102 Q328 200 344 320 L296 330 L286 196 Z'
+    o = f'<path d="{arm_l}" fill="{sc}" stroke="{sdk}" stroke-width="2" stroke-linejoin="round"/>'
+    o += f'<path d="{arm_r}" fill="{sc}" stroke="{sdk}" stroke-width="2" stroke-linejoin="round"/>'
+    o += f'<path d="M150 84 L114 196 L110 328 L290 328 L286 196 L250 84 Q200 104 150 84 Z" fill="url(#g)" stroke="{dk}" stroke-width="2.2" stroke-linejoin="round"/>'
+    # rib bands
+    o += f'<path d="M56 320 L104 330 L101 354 L52 344 Z M344 320 L296 330 L299 354 L348 344 Z" fill="{rib}" stroke="{sdk}" stroke-width="2"/>'
+    o += cuffrib(56, 322, 46, 22, sdk) + cuffrib(298, 322, 46, 22, sdk)
+    o += f'<path d="M110 328 L290 328 L292 358 L108 358 Z" fill="{rib}" stroke="{sdk}" stroke-width="2"/>'
+    o += ''.join(f'<line x1="{x}" y1="330" x2="{x}" y2="356" stroke="{sdk}" stroke-width="1" opacity=".45"/>' for x in range(116, 290, 8))
+    o += f'<path d="M150 84 L156 56 Q200 70 244 56 L250 84 Q200 104 150 84 Z" fill="{rib}" stroke="{sdk}" stroke-width="2"/>'
+    o += ''.join(f'<line x1="{x}" y1="{60+abs(x-200)*0.02:.0f}" x2="{x}" y2="{86+ (1-abs(x-200)/50)*8:.0f}" stroke="{sdk}" stroke-width="1" opacity=".4"/>' for x in range(160, 242, 7))
+    # zip, welt pockets, seams
+    o += f'<rect x="197" y="96" width="6" height="262" fill="{sh(c,-.4)}"/>' + ''.join(f'<rect x="198" y="{y}" width="4" height="2" fill="#c9c6bd"/>' for y in range(98, 356, 5))
+    o += f'<path d="M126 238 L140 300 M274 238 L260 300" stroke="{dk}" stroke-width="3" stroke-linecap="round"/>'
+    o += f'<path d="M114 196 L150 84 M286 196 L250 84" stroke="{dk}" stroke-width="1.5" opacity=".6" fill="none"/>'
+    return wrap(o, defs)
+
 # ---------------- trousers ----------------
 # Straight legs, no taper: outseam vertical from hip to hem, 86 px per leg at the hem.
 TROUSER_BODY = 'M122 40 L278 40 L290 140 L293 374 L207 374 L200 178 L193 374 L107 374 L110 140 Z'
@@ -265,8 +318,10 @@ TEMPLATES = {
     'polo':     (top,      {'neck': 'polo'},              'top',    {'w': 2}),
     'zip':      (top,      {'neck': 'mock', 'zip': 'full'}, 'top',  {'w': 3, 'tex': 'chunky'}),
     'cardigan': (top,      {'neck': 'mock', 'buttons': True}, 'top', {'w': 3, 'tex': 'chunky'}),
+    'shirt':    (shirt,    {},                            'top',    {'w': 1}),
     'coat':     (coat,     {},                            'outer',  {'w': 3}),
     'puffer':   (puffer,   {},                            'outer',  {'w': 3, 'casual': 1}),
+    'bomber':   (bomber,   {},                            'outer',  {'w': 2}),
     'trousers': (trousers, {'kind': 'trouser'},           'bottom', {'kind': 'trouser'}),
     'chinos':   (trousers, {'kind': 'chino'},             'bottom', {'kind': 'chino'}),
     'denim':    (trousers, {'kind': 'denim'},             'bottom', {'kind': 'denim'}),

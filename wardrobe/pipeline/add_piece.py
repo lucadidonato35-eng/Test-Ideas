@@ -33,7 +33,7 @@ IMG = os.path.join(ROOT, 'images')
 
 DEFAULT_TEMPLATE = {'top': 'crew', 'outer': 'coat', 'bottom': 'trousers', 'shoes': 'loafer'}
 SHORT = {'crew': 'Knit', 'mock': 'Mock neck', 'polo': 'Knit polo', 'zip': 'Zip knit', 'cardigan': 'Cardigan',
-         'coat': 'Coat', 'puffer': 'Puffer', 'trousers': 'Trousers', 'chinos': 'Chinos', 'denim': 'Jeans',
+         'coat': 'Coat', 'puffer': 'Puffer', 'bomber': 'Bomber', 'shirt': 'Shirt', 'trousers': 'Trousers', 'chinos': 'Chinos', 'denim': 'Jeans',
          'loafer': 'Loafers', 'chelsea': 'Boots', 'sneaker': 'Sneakers', 'runner': 'Sneakers'}
 # names the rules understand; hex values are reference points for --colour inference
 NAMED = {'black': '#1b1b1c', 'charcoal': '#2e2f33', 'grey': '#80807e', 'white': '#f1efe9', 'cream': '#e6dfd1',

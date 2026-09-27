@@ -423,5 +423,170 @@
   "source": "sources/nb.png",
   "source_kind": "kit",
   "surface": false
+ },
+ {
+  "key": "navy_zip_polo",
+  "name": "Navy zip polo",
+  "short": "Knit polo",
+  "cat": "top",
+  "colour": "navy",
+  "hex": "#1F2438",
+  "template": "polo:zip=half,sleeves=short",
+  "base": "#1f2438",
+  "occasions": [
+   "Evening",
+   "Weekend"
+  ],
+  "w": 1,
+  "source": "sources/navy_zip_polo.png",
+  "source_kind": "photo",
+  "photo": "photos/navy_zip_polo.jpg"
+ },
+ {
+  "key": "navy_cable_polo",
+  "name": "Navy cable polo",
+  "short": "Knit polo",
+  "cat": "top",
+  "colour": "navy",
+  "hex": "#22263A",
+  "template": "polo:sleeves=short",
+  "base": "#22263a",
+  "occasions": [
+   "Office",
+   "Evening"
+  ],
+  "w": 1,
+  "source": "sources/navy_cable_polo.png",
+  "source_kind": "photo",
+  "photo": "photos/navy_cable_polo.jpg"
+ },
+ {
+  "key": "cream_polo",
+  "name": "Cream knit polo",
+  "short": "Knit polo",
+  "cat": "top",
+  "colour": "cream",
+  "hex": "#E6DFD1",
+  "template": "polo:sleeves=short",
+  "base": "#e6dfd1",
+  "occasions": [
+   "Evening",
+   "Weekend"
+  ],
+  "w": 1,
+  "source": "sources/cream_polo.png",
+  "source_kind": "photo",
+  "photo": "photos/cream_polo.jpg"
+ },
+ {
+  "key": "light_blue_zip",
+  "name": "Light blue zip knit",
+  "short": "Zip knit",
+  "cat": "top",
+  "colour": "blue",
+  "hex": "#9FB0C4",
+  "template": "zip",
+  "base": "#9fb0c4",
+  "occasions": [
+   "Weekend"
+  ],
+  "w": 2,
+  "source": "sources/light_blue_zip.png",
+  "source_kind": "photo",
+  "photo": "photos/light_blue_zip.jpg"
+ },
+ {
+  "key": "black_zip",
+  "name": "Black ribbed zip knit",
+  "short": "Zip knit",
+  "cat": "top",
+  "colour": "black",
+  "hex": "#1B1B1D",
+  "template": "zip",
+  "base": "#1b1b1d",
+  "occasions": [
+   "Evening",
+   "Weekend"
+  ],
+  "w": 3,
+  "tex": "chunky",
+  "source": "sources/black_zip.png",
+  "source_kind": "photo",
+  "photo": "photos/black_zip.jpg"
+ },
+ {
+  "key": "black_cardigan",
+  "name": "Black V-neck cardigan",
+  "short": "Cardigan",
+  "cat": "top",
+  "colour": "black",
+  "hex": "#1C1B1D",
+  "template": "cardigan:v",
+  "base": "#1c1b1d",
+  "occasions": [
+   "Office",
+   "Evening",
+   "Weekend"
+  ],
+  "w": 2,
+  "source": "sources/black_cardigan.png",
+  "source_kind": "photo",
+  "photo": "photos/black_cardigan.jpg"
+ },
+ {
+  "key": "navy_half_zip",
+  "name": "Navy ribbed half-zip",
+  "short": "Zip knit",
+  "cat": "top",
+  "colour": "navy",
+  "hex": "#1E2233",
+  "template": "zip:half",
+  "base": "#1e2233",
+  "occasions": [
+   "Office",
+   "Evening",
+   "Weekend"
+  ],
+  "w": 3,
+  "tex": "chunky",
+  "source": "sources/navy_half_zip.png",
+  "source_kind": "photo",
+  "photo": "photos/navy_half_zip.jpg"
+ },
+ {
+  "key": "denim_shirt",
+  "name": "Denim western shirt",
+  "short": "Denim shirt",
+  "cat": "top",
+  "colour": "navy",
+  "hex": "#2A3550",
+  "template": "shirt:snaps",
+  "base": "#2a3550",
+  "occasions": [
+   "Weekend"
+  ],
+  "w": 1,
+  "casual": 1,
+  "source": "sources/denim_shirt.png",
+  "source_kind": "photo",
+  "photo": "photos/denim_shirt.jpg"
+ },
+ {
+  "key": "suede_bomber",
+  "name": "Suede knit bomber",
+  "short": "Bomber",
+  "cat": "outer",
+  "colour": "brown",
+  "hex": "#8A6A48",
+  "template": "bomber:sleeves=#cdbd9f",
+  "base": "#8a6a48",
+  "occasions": [
+   "Evening",
+   "Weekend"
+  ],
+  "w": 2,
+  "source": "sources/suede_bomber.png",
+  "source_kind": "photo",
+  "photo": "photos/suede_bomber.jpg"
  }
 ]

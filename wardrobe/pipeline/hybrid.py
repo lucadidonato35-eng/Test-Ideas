@@ -158,7 +158,11 @@ def make_garment(src, spec, base, surface=True, win=110, anchor=None, log=print)
     out = tex*ratio
     # hardware far from the base colour (zips, buttons, soles, stitching): SVG pixel as is
     dist = np.abs(frgb-basec).sum(-1)
-    hard = np.clip((dist-90)/60, 0, 1)[..., None]
+    hard = np.clip((dist-90)/60, 0, 1)
+    second = draw.parse(spec)[1].get('sleeves')
+    if isinstance(second, str) and second.startswith('#'):   # two-tone: sleeves are fabric too
+        hard = hard*np.clip((np.abs(frgb-hx(second)).sum(-1)-60)/60, 0, 1)
+    hard = hard[..., None]
     out = out*(1-hard)+frgb*hard
     return finish(out, fal)
 
