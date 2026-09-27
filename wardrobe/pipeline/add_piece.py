@@ -18,6 +18,9 @@ Other modes:
     python add_piece.py --rerender KEY [KEY ...]   rebuild images from sources/ (or: all)
     python add_piece.py --reprocess KEY [KEY ...]  redo cutout + correction from photos/ (or: all)
     python add_piece.py --build                    rebuild contact sheet and app only
+
+Group photo (several garments touching)? Crop a patch of plain fabric from inside the
+garment and pass --swatch: the template gives the shape, the photo only gives fabric.
 """
 import argparse, json, os, re, shutil, sys
 import numpy as np
@@ -87,8 +90,13 @@ def add(a):
     bad = [o for o in occ if o not in known]
     if bad: sys.exit(f'unknown occasion {bad}; use {known}')
 
-    log(f'[{key}] 1/4 cutout')
-    cut = cutout.cutout(a.photo, pair=(cat == 'shoes'), log=log)
+    if a.swatch:
+        if cat == 'shoes': sys.exit('--swatch is for garments; shoes need a real cutout')
+        log(f'[{key}] 1/4 swatch (no cutout: the photo is plain fabric from inside the garment)')
+        cut = cutout.load_photo(a.photo).convert('RGBA')
+    else:
+        log(f'[{key}] 1/4 cutout')
+        cut = cutout.cutout(a.photo, pair=(cat == 'shoes'), log=log)
     log(f'[{key}] 2/4 colour correction')
     strength, flat = prod.strength_for(template)
     src = prod.correct(cut, strength, flat)
@@ -110,6 +118,7 @@ def add(a):
     if a.texture == 'none': piece.pop('tex', None)
     if a.casual: piece['casual'] = 1
     piece.update({'source': f'sources/{key}.png', 'source_kind': 'photo', 'photo': f'photos/{key}.jpg'})
+    if a.swatch: piece['swatch'] = True
     log(f'[{key}] 3/4 render ({"photo cutout" if cat == "shoes" else template})')
     render(piece, src)
 
@@ -131,7 +140,9 @@ def reprocess(keys):
     if missing: sys.exit(f'no stored photo for: {sorted(missing)}')
     for p in todo:
         log(f"[{p['key']}] reprocess {p['photo']}")
-        cut = cutout.cutout(os.path.join(ROOT, p['photo']), pair=(p['cat'] == 'shoes'), log=log)
+        path = os.path.join(ROOT, p['photo'])
+        cut = cutout.load_photo(path).convert('RGBA') if p.get('swatch') else \
+            cutout.cutout(path, pair=(p['cat'] == 'shoes'), log=log)
         src = prod.correct(cut, *prod.strength_for(p['template']))
         src.save(os.path.join(ROOT, p['source']), optimize=True)
         render(p, src)
@@ -159,6 +170,8 @@ def main():
     ap.add_argument('--texture', choices=['pattern', 'chunky', 'none'])
     ap.add_argument('--casual', action='store_true')
     ap.add_argument('--replace', action='store_true', help='overwrite an existing key (re-shoot)')
+    ap.add_argument('--swatch', action='store_true',
+                    help='photo is a crop of plain fabric from inside the garment (group shots): skip the cutout')
     ap.add_argument('--rerender', nargs='+', metavar='KEY')
     ap.add_argument('--reprocess', nargs='+', metavar='KEY')
     ap.add_argument('--build', action='store_true')

@@ -483,6 +483,94 @@
     "chelsea"
    ],
    "why": "Ecru denim lifts a charcoal knit and grey flannel; brown boots ground it."
+  },
+  {
+   "name": "Raw Denim, Dressed Up",
+   "occ": "Evening",
+   "pcs": [
+    "hb_coat",
+    "grey_polo",
+    "raw_jeans",
+    "brown_loaf"
+   ],
+   "why": "Dark raw denim takes a wool coat and loafers as easily as tailoring."
+  },
+  {
+   "name": "Camel & Raw Denim",
+   "occ": "Weekend",
+   "pcs": [
+    "camel_field",
+    "cream_crew",
+    "raw_jeans",
+    "polo_sn"
+   ],
+   "why": "Camel, cream and deep indigo: the easiest warm-cool balance there is."
+  },
+  {
+   "name": "Suede & Dark Wash",
+   "occ": "Weekend",
+   "pcs": [
+    "suede_bomber",
+    "white_rib",
+    "dark_jeans",
+    "chelsea"
+   ],
+   "why": "Tan suede and dark denim, a white rib between them to keep it fresh."
+  },
+  {
+   "name": "Check & Dark Denim",
+   "occ": "Evening",
+   "pcs": [
+    "check_coat",
+    "taupe_crew",
+    "dark_jeans",
+    "brown_loaf"
+   ],
+   "why": "A soft taupe knit under the check coat; dark jeans read smart after dark."
+  },
+  {
+   "name": "Slate Office",
+   "occ": "Office",
+   "pcs": [
+    "black_coat",
+    "white_rib",
+    "slate_tr",
+    "black_loaf"
+   ],
+   "why": "Black, white and slate grey: clean, sharp, no colour needed."
+  },
+  {
+   "name": "Navy on Slate",
+   "occ": "Evening",
+   "pcs": [
+    "hb_coat",
+    "navy_knit_shirt",
+    "slate_tr",
+    "black_loaf"
+   ],
+   "why": "Navy knit on dark grey trousers under herringbone: quiet evening polish."
+  },
+  {
+   "name": "White Trousers, Autumn",
+   "occ": "Evening",
+   "pcs": [
+    "camel_field",
+    "navy_knit_shirt",
+    "white_tr",
+    "brown_loaf"
+   ],
+   "why": "White trousers work in autumn with navy and camel on top and brown leather."
+  },
+  {
+   "name": "Suede & White",
+   "occ": "Weekend",
+   "pcs": [
+    "suede_bomber",
+    "navy_zip_polo",
+    "white_tr",
+    "chelsea"
+   ],
+   "why": "Navy, tan and white: a sharp weekend palette with suede doing the texture."
   }
  ],
  "gb": [
@@ -493,13 +581,13 @@
     "black_loaf"
    ],
    "better": [
-    "cardigan",
+    "navy_knit_shirt",
     "grey_tr",
     "black_loaf"
    ],
    "gl": "White + grey",
    "bl": "Navy + grey",
-   "note": "Navy gives grey trousers depth. White on grey can look washed out."
+   "note": "Navy gives grey trousers depth and frames the face. White on grey can look washed out."
   },
   {
    "good": [
@@ -560,6 +648,51 @@
    "gl": "Charcoal + blue",
    "bl": "Charcoal + grey",
    "note": "Tonal greys with loafers turn a weekend knit into an evening look."
+  },
+  {
+   "good": [
+    "black_zip",
+    "brown_tr",
+    "brown_loaf"
+   ],
+   "better": [
+    "navy_half_zip",
+    "brown_tr",
+    "brown_loaf"
+   ],
+   "gl": "Black + brown",
+   "bl": "Navy + brown",
+   "note": "Black fights brown. Navy keeps the depth of a dark knit without the clash."
+  },
+  {
+   "good": [
+    "white_rib",
+    "white_tr",
+    "brown_loaf"
+   ],
+   "better": [
+    "navy_knit_shirt",
+    "white_tr",
+    "brown_loaf"
+   ],
+   "gl": "White + white",
+   "bl": "Navy + white",
+   "note": "White on white washes out in grey Nordic light. Navy over white trousers is crisp and deliberate."
+  },
+  {
+   "good": [
+    "taupe_crew",
+    "beige",
+    "brown_loaf"
+   ],
+   "better": [
+    "indigo_shirt",
+    "beige",
+    "brown_loaf"
+   ],
+   "gl": "Taupe + beige",
+   "bl": "Indigo + beige",
+   "note": "Taupe on beige blurs into one colour. Indigo gives the chinos an edge."
   }
  ]
 }

@@ -215,7 +215,7 @@
   "short": "Trousers",
   "cat": "bottom",
   "colour": "brown",
-  "hex": "#5A3F30",
+  "hex": "#5B4032",
   "template": "trousers",
   "base": "#5b4032",
   "occasions": [
@@ -224,8 +224,9 @@
   ],
   "kind": "trouser",
   "source": "sources/brown_tr.png",
-  "source_kind": "kit",
-  "surface": false
+  "source_kind": "photo",
+  "photo": "photos/brown_tr.jpg",
+  "swatch": true
  },
  {
   "key": "grey_tr",
@@ -233,7 +234,7 @@
   "short": "Trousers",
   "cat": "bottom",
   "colour": "grey",
-  "hex": "#7F7E7B",
+  "hex": "#8A8886",
   "template": "trousers",
   "base": "#8a8886",
   "occasions": [
@@ -242,8 +243,9 @@
   ],
   "kind": "trouser",
   "source": "sources/grey_tr.png",
-  "source_kind": "kit",
-  "surface": false
+  "source_kind": "photo",
+  "photo": "photos/grey_tr.jpg",
+  "swatch": true
  },
  {
   "key": "charcoal",
@@ -251,7 +253,7 @@
   "short": "Trousers",
   "cat": "bottom",
   "colour": "charcoal",
-  "hex": "#2C2D30",
+  "hex": "#2B2B2E",
   "template": "trousers",
   "base": "#2b2b2e",
   "occasions": [
@@ -260,8 +262,9 @@
   ],
   "kind": "trouser",
   "source": "sources/charcoal.png",
-  "source_kind": "kit",
-  "surface": false
+  "source_kind": "photo",
+  "photo": "photos/charcoal.jpg",
+  "swatch": true
  },
  {
   "key": "beige",
@@ -269,7 +272,7 @@
   "short": "Chinos",
   "cat": "bottom",
   "colour": "beige",
-  "hex": "#C8BAA6",
+  "hex": "#C8B8A2",
   "template": "chinos",
   "base": "#c8b8a2",
   "occasions": [
@@ -279,8 +282,9 @@
   ],
   "kind": "chino",
   "source": "sources/beige.png",
-  "source_kind": "kit",
-  "surface": false
+  "source_kind": "photo",
+  "photo": "photos/beige.jpg",
+  "swatch": true
  },
  {
   "key": "grey_jeans",
@@ -323,7 +327,7 @@
   "short": "Loafers",
   "cat": "shoes",
   "colour": "black",
-  "hex": "#151515",
+  "hex": "#1B1A1A",
   "template": "loafer:penny",
   "base": "#1b1a1a",
   "occasions": [
@@ -332,8 +336,8 @@
   ],
   "style": "loafer",
   "source": "sources/black_loaf.png",
-  "source_kind": "kit",
-  "surface": false
+  "source_kind": "photo",
+  "photo": "photos/black_loaf.jpg"
  },
  {
   "key": "brown_loaf",
@@ -351,8 +355,8 @@
   ],
   "style": "loafer",
   "source": "sources/brown_loaf.png",
-  "source_kind": "kit",
-  "surface": false
+  "source_kind": "photo",
+  "photo": "photos/brown_loaf.jpg"
  },
  {
   "key": "chelsea",
@@ -360,7 +364,7 @@
   "short": "Boots",
   "cat": "shoes",
   "colour": "brown",
-  "hex": "#3B2621",
+  "hex": "#3B241F",
   "template": "chelsea",
   "base": "#3b241f",
   "occasions": [
@@ -370,8 +374,8 @@
   ],
   "style": "boot",
   "source": "sources/chelsea.png",
-  "source_kind": "kit",
-  "surface": false
+  "source_kind": "photo",
+  "photo": "photos/chelsea.jpg"
  },
  {
   "key": "bw_sn",
@@ -379,7 +383,7 @@
   "short": "Sneakers",
   "cat": "shoes",
   "colour": "black",
-  "hex": "#222222",
+  "hex": "#1C1C1E",
   "template": "sneaker:stripe=#f4f2ee,sole=#f4f2ee",
   "base": "#1c1c1e",
   "occasions": [
@@ -387,8 +391,8 @@
   ],
   "style": "sneaker",
   "source": "sources/bw_sn.png",
-  "source_kind": "kit",
-  "surface": false
+  "source_kind": "photo",
+  "photo": "photos/bw_sn.jpg"
  },
  {
   "key": "polo_sn",
@@ -396,7 +400,7 @@
   "short": "Sneakers",
   "cat": "shoes",
   "colour": "beige",
-  "hex": "#CBBFAE",
+  "hex": "#D9CBB8",
   "template": "sneaker:sole=#c9a67a",
   "base": "#d9cbb8",
   "occasions": [
@@ -404,8 +408,8 @@
   ],
   "style": "sneaker",
   "source": "sources/polo_sn.png",
-  "source_kind": "kit",
-  "surface": false
+  "source_kind": "photo",
+  "photo": "photos/polo_sn.jpg"
  },
  {
   "key": "nb",
@@ -413,7 +417,7 @@
   "short": "Sneakers",
   "cat": "shoes",
   "colour": "grey",
-  "hex": "#9A9EA3",
+  "hex": "#9C9EA3",
   "template": "runner:accent=#7fa6c9",
   "base": "#9c9ea3",
   "occasions": [
@@ -421,8 +425,8 @@
   ],
   "style": "sneaker",
   "source": "sources/nb.png",
-  "source_kind": "kit",
-  "surface": false
+  "source_kind": "photo",
+  "photo": "photos/nb.jpg"
  },
  {
   "key": "navy_zip_polo",
@@ -756,5 +760,81 @@
   "source": "sources/ecru_jeans.png",
   "source_kind": "photo",
   "photo": "photos/ecru_jeans.jpg"
+ },
+ {
+  "key": "raw_jeans",
+  "name": "Raw indigo jeans",
+  "short": "Jeans",
+  "cat": "bottom",
+  "colour": "blue",
+  "hex": "#1D2233",
+  "template": "denim",
+  "base": "#1d2233",
+  "occasions": [
+   "Evening",
+   "Weekend"
+  ],
+  "kind": "denim",
+  "source": "sources/raw_jeans.png",
+  "source_kind": "photo",
+  "photo": "photos/raw_jeans.jpg",
+  "swatch": true
+ },
+ {
+  "key": "dark_jeans",
+  "name": "Dark-wash jeans",
+  "short": "Jeans",
+  "cat": "bottom",
+  "colour": "blue",
+  "hex": "#2F4A6E",
+  "template": "denim",
+  "base": "#2f4a6e",
+  "occasions": [
+   "Evening",
+   "Weekend"
+  ],
+  "kind": "denim",
+  "source": "sources/dark_jeans.png",
+  "source_kind": "photo",
+  "photo": "photos/dark_jeans.jpg",
+  "swatch": true
+ },
+ {
+  "key": "slate_tr",
+  "name": "Dark grey trousers",
+  "short": "Trousers",
+  "cat": "bottom",
+  "colour": "grey",
+  "hex": "#5F605F",
+  "template": "trousers",
+  "base": "#5f605f",
+  "occasions": [
+   "Office",
+   "Evening"
+  ],
+  "kind": "trouser",
+  "source": "sources/slate_tr.png",
+  "source_kind": "photo",
+  "photo": "photos/slate_tr.jpg",
+  "swatch": true
+ },
+ {
+  "key": "white_tr",
+  "name": "White trousers",
+  "short": "Trousers",
+  "cat": "bottom",
+  "colour": "white",
+  "hex": "#ECE8DF",
+  "template": "trousers",
+  "base": "#ece8df",
+  "occasions": [
+   "Evening",
+   "Weekend"
+  ],
+  "kind": "trouser",
+  "source": "sources/white_tr.png",
+  "source_kind": "photo",
+  "photo": "photos/white_tr.jpg",
+  "swatch": true
  }
 ]
