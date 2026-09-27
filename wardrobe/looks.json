@@ -285,6 +285,116 @@
     "brown_loaf"
    ],
    "why": "Suede and denim are a classic; the charcoal zip keeps the palette calm."
+  },
+  {
+   "name": "Taupe & Brown",
+   "occ": "Office",
+   "pcs": [
+    "check_coat",
+    "taupe_crew",
+    "brown_tr",
+    "brown_loaf"
+   ],
+   "why": "Taupe sits between the grey check and brown trousers and ties them together."
+  },
+  {
+   "name": "Soft Suede",
+   "occ": "Evening",
+   "pcs": [
+    "suede_bomber",
+    "taupe_crew",
+    "grey_tr",
+    "chelsea"
+   ],
+   "why": "Suede and a fine taupe knit over grey: warm texture, quiet colour."
+  },
+  {
+   "name": "Camel Over Navy",
+   "occ": "Evening",
+   "pcs": [
+    "camel_field",
+    "cardigan",
+    "beige",
+    "brown_loaf"
+   ],
+   "why": "Camel over navy is the classic pairing; beige chinos keep it light."
+  },
+  {
+   "name": "Camel & Grey",
+   "occ": "Weekend",
+   "pcs": [
+    "camel_field",
+    "grey_polo",
+    "grey_jeans",
+    "polo_sn"
+   ],
+   "why": "A camel jacket warms a grey-on-grey base; suede sneakers match the jacket."
+  },
+  {
+   "name": "Knit Overshirt Office",
+   "occ": "Office",
+   "pcs": [
+    "check_coat",
+    "taupe_overshirt",
+    "grey_tr",
+    "brown_loaf"
+   ],
+   "why": "A knitted overshirt replaces the blazer; taupe and grey stay soft together."
+  },
+  {
+   "name": "Tonal Taupe",
+   "occ": "Evening",
+   "pcs": [
+    "camel_field",
+    "taupe_overshirt",
+    "brown_tr",
+    "chelsea"
+   ],
+   "why": "Camel, taupe and brown in one warm family, with texture doing the work."
+  },
+  {
+   "name": "Chambray & Camel",
+   "occ": "Evening",
+   "pcs": [
+    "camel_field",
+    "chambray_shirt",
+    "brown_tr",
+    "chelsea"
+   ],
+   "why": "Blue chambray cools down camel and brown; boots keep it evening-ready."
+  },
+  {
+   "name": "Chambray & Herringbone",
+   "occ": "Weekend",
+   "pcs": [
+    "hb_coat",
+    "chambray_shirt",
+    "grey_jeans",
+    "bw_sn"
+   ],
+   "why": "A washed blue shirt under wool herringbone, grey denim to avoid double blue."
+  },
+  {
+   "name": "Navy Knit Shirt Office",
+   "occ": "Office",
+   "pcs": [
+    "check_coat",
+    "navy_knit_shirt",
+    "grey_tr",
+    "brown_loaf"
+   ],
+   "why": "Navy and grey with brown loafers: the office default made in soft knit."
+  },
+  {
+   "name": "Navy & Brown",
+   "occ": "Evening",
+   "pcs": [
+    "camel_field",
+    "navy_knit_shirt",
+    "brown_tr",
+    "chelsea"
+   ],
+   "why": "Navy against brown and camel: rich contrast without any black."
   }
  ],
  "gb": [

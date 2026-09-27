@@ -199,9 +199,10 @@ def shirt(c, pockets=2, snaps=False, surface=True):
     return wrap(o, defs)
 
 # ---------------- bomber ----------------
-def bomber(c, sleeves=None, surface=True):
+def bomber(c, sleeves=None, collar=False, flaps=False, surface=True):
     """Bomber: ribbed collar, cuffs and hem band, zip, welt pockets. sleeves= a second colour
-    for two-tone jackets (e.g. suede body with knit sleeves)."""
+    for two-tone jackets (e.g. suede body with knit sleeves). collar: shirt collar instead of
+    the rib (field / harrington jacket). flaps: flap patch pockets instead of welts."""
     dk = sh(c, -.35); defs = grad('g', c)
     sc = sleeves or c; sdk = sh(sc, -.3)
     rib = sh(sleeves or c, -.06)
@@ -215,11 +216,20 @@ def bomber(c, sleeves=None, surface=True):
     o += cuffrib(56, 322, 46, 22, sdk) + cuffrib(298, 322, 46, 22, sdk)
     o += f'<path d="M110 328 L290 328 L292 358 L108 358 Z" fill="{rib}" stroke="{sdk}" stroke-width="2"/>'
     o += ''.join(f'<line x1="{x}" y1="330" x2="{x}" y2="356" stroke="{sdk}" stroke-width="1" opacity=".45"/>' for x in range(116, 290, 8))
-    o += f'<path d="M150 84 L156 56 Q200 70 244 56 L250 84 Q200 104 150 84 Z" fill="{rib}" stroke="{sdk}" stroke-width="2"/>'
-    o += ''.join(f'<line x1="{x}" y1="{60+abs(x-200)*0.02:.0f}" x2="{x}" y2="{86+ (1-abs(x-200)/50)*8:.0f}" stroke="{sdk}" stroke-width="1" opacity=".4"/>' for x in range(160, 242, 7))
+    if collar:
+        o += f'<path d="M146 84 Q200 64 254 84 Q200 104 146 84 Z" fill="{sh(c,-.35)}"/>'
+        o += f'<path d="M146 84 L130 138 L190 112 L198 96 Z M254 84 L270 138 L210 112 L202 96 Z" fill="{sh(c,.05)}" stroke="{dk}" stroke-width="2" stroke-linejoin="round"/>'
+    else:
+        o += f'<path d="M150 84 L156 56 Q200 70 244 56 L250 84 Q200 104 150 84 Z" fill="{rib}" stroke="{sdk}" stroke-width="2"/>'
+        o += ''.join(f'<line x1="{x}" y1="{60+abs(x-200)*0.02:.0f}" x2="{x}" y2="{86+ (1-abs(x-200)/50)*8:.0f}" stroke="{sdk}" stroke-width="1" opacity=".4"/>' for x in range(160, 242, 7))
     # zip, welt pockets, seams
     o += f'<rect x="197" y="96" width="6" height="262" fill="{sh(c,-.4)}"/>' + ''.join(f'<rect x="198" y="{y}" width="4" height="2" fill="#c9c6bd"/>' for y in range(98, 356, 5))
-    o += f'<path d="M126 238 L140 300 M274 238 L260 300" stroke="{dk}" stroke-width="3" stroke-linecap="round"/>'
+    if flaps:
+        for x in (122, 222):
+            o += f'<path d="M{x} 236 L{x+56} 236 L{x+56} 306 L{x} 306 Z" fill="none" stroke="{dk}" stroke-width="1.5" opacity=".7"/>'
+            o += f'<path d="M{x-2} 230 L{x+58} 230 L{x+58} 252 L{x-2} 252 Z" fill="{sh(c,-.05)}" stroke="{dk}" stroke-width="1.5"/>'
+    else:
+        o += f'<path d="M126 238 L140 300 M274 238 L260 300" stroke="{dk}" stroke-width="3" stroke-linecap="round"/>'
     o += f'<path d="M114 196 L150 84 M286 196 L250 84" stroke="{dk}" stroke-width="1.5" opacity=".6" fill="none"/>'
     return wrap(o, defs)
 

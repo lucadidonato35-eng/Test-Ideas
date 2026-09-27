@@ -38,7 +38,7 @@ SHORT = {'crew': 'Knit', 'mock': 'Mock neck', 'polo': 'Knit polo', 'zip': 'Zip k
 # names the rules understand; hex values are reference points for --colour inference
 NAMED = {'black': '#1b1b1c', 'charcoal': '#2e2f33', 'grey': '#80807e', 'white': '#f1efe9', 'cream': '#e6dfd1',
          'beige': '#c8b8a2', 'brown': '#5a3f30', 'navy': '#1f2638', 'blue': '#6b86a6', 'olive': '#5a5e4c',
-         'green': '#3f5a45', 'burgundy': '#5c2430', 'camel': '#b08a5a', 'rust': '#8a4a2c', 'dark': '#3f3a38'}
+         'green': '#3f5a45', 'burgundy': '#5c2430', 'camel': '#b08a5a', 'taupe': '#7a6e62', 'rust': '#8a4a2c', 'dark': '#3f3a38'}
 
 def log(*a): print(*a, flush=True)
 

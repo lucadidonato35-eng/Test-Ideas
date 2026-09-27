@@ -588,5 +588,99 @@
   "source": "sources/suede_bomber.png",
   "source_kind": "photo",
   "photo": "photos/suede_bomber.jpg"
+ },
+ {
+  "key": "taupe_crew",
+  "name": "Taupe fine-knit crew",
+  "short": "Knit",
+  "cat": "top",
+  "colour": "taupe",
+  "hex": "#6E6558",
+  "template": "crew",
+  "base": "#6e6558",
+  "occasions": [
+   "Office",
+   "Evening",
+   "Weekend"
+  ],
+  "w": 1,
+  "source": "sources/taupe_crew.png",
+  "source_kind": "photo",
+  "photo": "photos/taupe_crew.jpg"
+ },
+ {
+  "key": "camel_field",
+  "name": "Camel field jacket",
+  "short": "Jacket",
+  "cat": "outer",
+  "colour": "camel",
+  "hex": "#A67C52",
+  "template": "bomber:collar,flaps",
+  "base": "#a67c52",
+  "occasions": [
+   "Evening",
+   "Weekend"
+  ],
+  "w": 2,
+  "source": "sources/camel_field.png",
+  "source_kind": "photo",
+  "photo": "photos/camel_field.jpg"
+ },
+ {
+  "key": "taupe_overshirt",
+  "name": "Taupe knit overshirt",
+  "short": "Overshirt",
+  "cat": "top",
+  "colour": "taupe",
+  "hex": "#8A7A6A",
+  "template": "shirt:pockets=0",
+  "base": "#8a7a6a",
+  "occasions": [
+   "Office",
+   "Evening",
+   "Weekend"
+  ],
+  "w": 2,
+  "source": "sources/taupe_overshirt.png",
+  "source_kind": "photo",
+  "photo": "photos/taupe_overshirt.jpg"
+ },
+ {
+  "key": "chambray_shirt",
+  "name": "Chambray shirt",
+  "short": "Shirt",
+  "cat": "top",
+  "colour": "blue",
+  "hex": "#3E5578",
+  "template": "shirt",
+  "base": "#3e5578",
+  "occasions": [
+   "Evening",
+   "Weekend"
+  ],
+  "w": 1,
+  "casual": 1,
+  "source": "sources/chambray_shirt.png",
+  "source_kind": "photo",
+  "photo": "photos/chambray_shirt.jpg"
+ },
+ {
+  "key": "navy_knit_shirt",
+  "name": "Navy knit shirt",
+  "short": "Knit shirt",
+  "cat": "top",
+  "colour": "navy",
+  "hex": "#262A3E",
+  "template": "shirt:pockets=0",
+  "base": "#262a3e",
+  "occasions": [
+   "Office",
+   "Evening",
+   "Weekend"
+  ],
+  "w": 1,
+  "source": "sources/navy_knit_shirt.png",
+  "source_kind": "photo",
+  "photo": "photos/navy_knit_shirt.jpg"
  }
 ]
