@@ -57,11 +57,11 @@ def remove_pink(rgb, alpha, log=print):
 
     Brown and beige cloth also passes that test (warm, red above blue), so two guards:
     velvet pink keeps blue close to green (b >= g-8, brown has b well below g), and if
-    the candidates cover over a third of the garment we only clean a thin edge band."""
+    the candidates cover over 15% of the garment we only clean a thin edge band."""
     r, g, b = rgb[..., 0], rgb[..., 1], rgb[..., 2]
     on = alpha > 0.5
     cand = (r-b > 20) & (r-g > 10) & (b >= g-8) & on
-    if cand.sum() > 0.35*on.sum():
+    if cand.sum() > 0.15*on.sum():      # real ottoman leftovers stay under ~5%
         band = ndimage.distance_transform_edt(on) < 12
         cand &= band
         log('  pink: garment itself is warm-toned, cleaning edge band only')

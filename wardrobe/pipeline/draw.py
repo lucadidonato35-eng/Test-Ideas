@@ -329,6 +329,7 @@ TEMPLATES = {
     'zip':      (top,      {'neck': 'mock', 'zip': 'full'}, 'top',  {'w': 3, 'tex': 'chunky'}),
     'cardigan': (top,      {'neck': 'mock', 'buttons': True}, 'top', {'w': 3, 'tex': 'chunky'}),
     'shirt':    (shirt,    {},                            'top',    {'w': 1}),
+    'overshirt':(shirt,    {},                            'outer',  {'w': 2}),
     'coat':     (coat,     {},                            'outer',  {'w': 3}),
     'puffer':   (puffer,   {},                            'outer',  {'w': 3, 'casual': 1}),
     'bomber':   (bomber,   {},                            'outer',  {'w': 2}),

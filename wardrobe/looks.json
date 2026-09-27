@@ -395,6 +395,94 @@
     "chelsea"
    ],
    "why": "Navy against brown and camel: rich contrast without any black."
+  },
+  {
+   "name": "Indigo & Brown",
+   "occ": "Evening",
+   "pcs": [
+    "check_coat",
+    "indigo_shirt",
+    "brown_tr",
+    "chelsea"
+   ],
+   "why": "Deep indigo against brown trousers and boots; the check coat bridges both."
+  },
+  {
+   "name": "Suede & Indigo",
+   "occ": "Evening",
+   "pcs": [
+    "suede_bomber",
+    "indigo_shirt",
+    "grey_tr",
+    "brown_loaf"
+   ],
+   "why": "Tan suede over an indigo shirt is warm on cool, with grey keeping it neutral."
+  },
+  {
+   "name": "Flannel Layers",
+   "occ": "Evening",
+   "pcs": [
+    "grey_overshirt",
+    "cream_crew",
+    "grey_jeans",
+    "chelsea"
+   ],
+   "why": "Grey flannel over a cream knit: soft, tonal and warm enough on its own."
+  },
+  {
+   "name": "Flannel Office",
+   "occ": "Office",
+   "pcs": [
+    "grey_overshirt",
+    "zip",
+    "brown_tr",
+    "brown_loaf"
+   ],
+   "why": "A flannel overshirt as the jacket; brown trousers warm up the greys."
+  },
+  {
+   "name": "Taupe Tailoring",
+   "occ": "Office",
+   "pcs": [
+    "hb_coat",
+    "taupe_shirt",
+    "grey_tr",
+    "black_loaf"
+   ],
+   "why": "A taupe twill shirt softens a grey-and-herringbone office look."
+  },
+  {
+   "name": "Taupe & Flannel",
+   "occ": "Evening",
+   "pcs": [
+    "grey_overshirt",
+    "taupe_shirt",
+    "grey_jeans",
+    "chelsea"
+   ],
+   "why": "Taupe and grey flannel are close cousins; brown boots finish it."
+  },
+  {
+   "name": "Ecru Weekend",
+   "occ": "Weekend",
+   "pcs": [
+    "hb_coat",
+    "white_rib",
+    "ecru_jeans",
+    "polo_sn"
+   ],
+   "why": "White on ecru under dark herringbone: light, crisp and still autumnal."
+  },
+  {
+   "name": "Ecru & Grey",
+   "occ": "Evening",
+   "pcs": [
+    "grey_overshirt",
+    "zip",
+    "ecru_jeans",
+    "chelsea"
+   ],
+   "why": "Ecru denim lifts a charcoal knit and grey flannel; brown boots ground it."
   }
  ],
  "gb": [

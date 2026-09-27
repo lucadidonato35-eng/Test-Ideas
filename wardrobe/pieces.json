@@ -288,7 +288,7 @@
   "short": "Jeans",
   "cat": "bottom",
   "colour": "grey",
-  "hex": "#76726C",
+  "hex": "#7D7873",
   "template": "denim",
   "base": "#7d7873",
   "occasions": [
@@ -297,8 +297,8 @@
   ],
   "kind": "denim",
   "source": "sources/grey_jeans.png",
-  "source_kind": "kit",
-  "surface": false
+  "source_kind": "photo",
+  "photo": "photos/grey_jeans.jpg"
  },
  {
   "key": "blue_jeans",
@@ -306,7 +306,7 @@
   "short": "Jeans",
   "cat": "bottom",
   "colour": "blue",
-  "hex": "#6C87A5",
+  "hex": "#6B86A6",
   "template": "denim",
   "base": "#6b86a6",
   "occasions": [
@@ -314,8 +314,8 @@
   ],
   "kind": "denim",
   "source": "sources/blue_jeans.png",
-  "source_kind": "kit",
-  "surface": false
+  "source_kind": "photo",
+  "photo": "photos/blue_jeans.jpg"
  },
  {
   "key": "black_loaf",
@@ -682,5 +682,79 @@
   "source": "sources/navy_knit_shirt.png",
   "source_kind": "photo",
   "photo": "photos/navy_knit_shirt.jpg"
+ },
+ {
+  "key": "indigo_shirt",
+  "name": "Indigo linen shirt",
+  "short": "Shirt",
+  "cat": "top",
+  "colour": "navy",
+  "hex": "#2B3144",
+  "template": "shirt:pockets=1",
+  "base": "#2b3144",
+  "occasions": [
+   "Evening",
+   "Weekend"
+  ],
+  "w": 1,
+  "casual": 1,
+  "source": "sources/indigo_shirt.png",
+  "source_kind": "photo",
+  "photo": "photos/indigo_shirt.jpg"
+ },
+ {
+  "key": "grey_overshirt",
+  "name": "Grey flannel overshirt",
+  "short": "Overshirt",
+  "cat": "outer",
+  "colour": "grey",
+  "hex": "#8F8C89",
+  "template": "overshirt",
+  "base": "#8f8c89",
+  "occasions": [
+   "Office",
+   "Evening",
+   "Weekend"
+  ],
+  "w": 2,
+  "source": "sources/grey_overshirt.png",
+  "source_kind": "photo",
+  "photo": "photos/grey_overshirt.jpg"
+ },
+ {
+  "key": "taupe_shirt",
+  "name": "Taupe twill shirt",
+  "short": "Shirt",
+  "cat": "top",
+  "colour": "taupe",
+  "hex": "#7D7069",
+  "template": "shirt",
+  "base": "#7d7069",
+  "occasions": [
+   "Office",
+   "Evening"
+  ],
+  "w": 1,
+  "source": "sources/taupe_shirt.png",
+  "source_kind": "photo",
+  "photo": "photos/taupe_shirt.jpg"
+ },
+ {
+  "key": "ecru_jeans",
+  "name": "Ecru jeans",
+  "short": "Jeans",
+  "cat": "bottom",
+  "colour": "white",
+  "hex": "#E8E3D6",
+  "template": "denim",
+  "base": "#e8e3d6",
+  "occasions": [
+   "Weekend",
+   "Evening"
+  ],
+  "kind": "denim",
+  "source": "sources/ecru_jeans.png",
+  "source_kind": "photo",
+  "photo": "photos/ecru_jeans.jpg"
  }
 ]
