@@ -1,6 +1,10 @@
 # Digital wardrobe
 
-Everything lives in `wardrobe/`. See `wardrobe/README.md` for the layout.
+Two apps share one data set:
+- `closet/` is the current app (Today, Mix, Looks, Closet, Insights; in-app adding). See `closet/README.md`.
+- `wardrobe/` holds the data (pieces, rules, looks, images), the image pipeline and the first app. See `wardrobe/README.md`.
+
+`add_piece.py` rebuilds both apps.
 
 Setup in a fresh container: `pip install -r wardrobe/requirements.txt` (rembg downloads its models on first use).
 
@@ -18,7 +22,12 @@ When the user says "new piece" and attaches a photo (uploads land in `/root/.cla
    This writes `images/<key>.webp`, `sources/`, `photos/`, updates `pieces.json`, rebuilds `images/_sheet.jpg` and `app/index.html`, and prints looks that pass every rule.
 4. Pick 2–3 of the printed suggestions (or better ones), give each a name and a one-line "why", append them to `looks.json` → `looks`, then `python add_piece.py --build`.
 5. `python tests/test_rules.py` (from `wardrobe/`) must pass.
-6. Show the user `images/_sheet.jpg` (new piece is outlined) and the new looks; commit and push.
+6. Show the user `images/_sheet.jpg` (new piece is outlined) and the new looks, and send `closet/index.html`; commit and push.
+   If the studio photo (`images/photo/<key>.webp`) of a flat-lay looks better than the illustration, add the key to `PHOTO_DEFAULT` in `closet/build.py`.
+
+## Backup files from the app
+
+When the user sends a `closet-backup-*.json`, pieces they added on the phone are in `pieces` with `userAdded: true` and an `img` data URI; edits to existing pieces are partial objects under their key. To bring an added piece into the repo at studio quality, save its image and run `add_piece.py` on it with its name, category and occasions.
 
 ## Photo guidance to pass on
 

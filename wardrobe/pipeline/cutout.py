@@ -91,11 +91,43 @@ def keep_main(alpha, pair=False, log=print):
     inner = ndimage.binary_erosion(km, iterations=3)
     return np.where(inner, 1.0, alpha*km)
 
+def remove_bleed(rgb, alpha, log=print):
+    """Background that rembg kept at the garment's edge (a strip of shadowed ottoman, rug):
+    pixels inside the mask whose colour matches what lies just outside it, and that connect
+    to the outline, go."""
+    m = alpha > 0.5
+    ring = ndimage.binary_dilation(m, iterations=40) & ~ndimage.binary_dilation(m, iterations=8)
+    if ring.sum() < 500 or m.sum() < 1000: return alpha
+    bg = rgb[ring]
+    # a few background colours (ottoman lit / shadowed, rug, floor)
+    rng = np.random.default_rng(0)
+    cent = bg[rng.choice(len(bg), 6, replace=False)]
+    for _ in range(8):
+        lab = np.argmin(((bg[:, None]-cent[None])**2).sum(-1), 1)
+        cent = np.array([bg[lab == k].mean(0) if (lab == k).any() else cent[k] for k in range(len(cent))])
+    inside = rgb[m]
+    fg_med = np.median(inside, 0)
+    d_bg = np.sqrt(((rgb[..., None, :]-cent[None, None])**2).sum(-1)).min(-1)
+    d_fg = np.sqrt(((rgb-fg_med)**2).sum(-1))
+    like_bg = m & (d_bg < 28) & (d_bg < 0.6*d_fg)
+    # only regions touching the outline, and never more than 10% of the garment
+    edge = m & ~ndimage.binary_erosion(m, iterations=3)
+    lab, n = ndimage.label(like_bg)
+    touch = np.unique(lab[edge & like_bg]); touch = touch[touch > 0]
+    kill = np.isin(lab, touch)
+    kill = ndimage.binary_opening(kill, iterations=2)
+    if kill.sum() > 0.10*m.sum():
+        log('  bleed: skipped (garment colour too close to the background)'); return alpha
+    if kill.any(): log(f'  bleed: removed {kill.sum()/m.sum():.1%} background-coloured edge')
+    alpha = alpha.copy(); alpha[kill] = 0
+    return alpha
+
 def cutout(path, pair=False, log=print):
     im = load_photo(path)
     rgb = np.array(im).astype(float)
     alpha, model = rembg_mask(im, pair, log)
     alpha = remove_pink(rgb, alpha, log)
+    alpha = remove_bleed(rgb, alpha, log)
     alpha = keep_main(alpha, pair, log)
     ys, xs = np.where(alpha > 0.5)
     if not len(ys): raise RuntimeError('cutout is empty: the garment was not found in the photo')

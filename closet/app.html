@@ -1,0 +1,765 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#EDE8E1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Closet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@400;500;600&display=swap">
+<style>
+/* One warm studio look in both themes, on purpose: the clothes are photographed on cream. */
+:root{
+  color-scheme:light;
+  --bg:#EDE8E1;--panel:#F7F4EF;--tile:#EFEAE3;--ink:#1D1B19;--mute:#6F685F;--line:#DCD4C9;
+  --accent:#1F2A44;--good:#3E6A47;--warn:#8F5620;--bad:#963838;--shadow:rgba(40,30,20,.22);
+  --serif:"Cormorant Garamond","Iowan Old Style",Georgia,serif;
+  --sans:"Jost",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --nav:64px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink)}
+body{font-family:var(--sans);font-size:15px;line-height:1.45;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.app{max-width:430px;margin:0 auto;padding:18px 16px calc(var(--nav) + 28px + env(safe-area-inset-bottom))}
+header.top{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:6px}
+h1{font-family:var(--serif);font-weight:500;font-size:34px;line-height:1;margin:0}
+.meta{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+h2.sec{font-family:var(--serif);font-weight:500;font-size:24px;margin:22px 0 8px}
+.lbl{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin:16px 0 8px}
+.muted{color:var(--mute)}
+.small{font-size:13px}
+/* nav */
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(247,244,239,.96);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+nav.tabs .in{max-width:430px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);height:var(--nav)}
+nav.tabs button{border:0;background:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:11px;color:var(--mute);cursor:pointer}
+nav.tabs button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.6}
+nav.tabs button[aria-current="page"]{color:var(--ink);font-weight:600}
+/* chips, buttons */
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chips.scroll{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+.chip{border:1px solid var(--line);background:transparent;font-size:13px;font-weight:500;padding:6px 13px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--panel);border-color:var(--ink)}
+.btn{border:0;background:var(--ink);color:var(--panel);font-size:14px;font-weight:500;padding:10px 16px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+.btn.soft{background:var(--tile);color:var(--ink)}
+.btn.good{background:var(--good)}
+.btn:disabled{opacity:.4}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}
+/* flat lay */
+.fit{position:relative;aspect-ratio:1/1;width:100%}
+.fit img{position:absolute;object-fit:contain}
+.fit .t{left:1%;top:3%;width:52%;height:46%;z-index:3}
+.fit .o{left:47%;top:1%;width:52%;height:58%;z-index:2}
+.fit .b{left:6%;top:47%;width:42%;height:52%;z-index:1}
+.fit .s{left:52%;top:63%;width:44%;height:34%;z-index:4}
+.fit.noouter .t{left:4%;top:3%;width:58%;height:50%}
+.fit.noouter .b{left:8%;top:49%;width:44%;height:50%}
+.fit.noouter .s{left:54%;top:52%;width:44%;height:36%}
+img.user{filter:drop-shadow(0 6px 8px var(--shadow))}
+.dots{display:inline-flex;vertical-align:middle}
+.dots i{width:14px;height:14px;border-radius:50%;box-shadow:0 1px 3px var(--shadow);display:block}
+.dots i+i{margin-left:-4px}
+.verdict{font-family:var(--serif);font-weight:600;font-size:26px;line-height:1.05}
+.v-ok{color:var(--good)}.v-warn{color:var(--warn)}.v-no{color:var(--bad)}
+.vdot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.vdot.ok{background:var(--good)}.vdot.warn{background:var(--warn)}.vdot.no{background:var(--bad)}
+.notes{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:4px}
+.notes li{display:grid;grid-template-columns:16px 1fr;gap:6px;font-size:14px}
+.ck{font-size:11px;padding:2px 7px;border:1px solid currentColor;border-radius:4px}
+.ck.ok{color:var(--good)}.ck.warn{color:var(--warn)}.ck.no{color:var(--bad)}
+/* today */
+.weather{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.temp{font-family:var(--serif);font-size:44px;line-height:1}
+.today h3{font-family:var(--serif);font-weight:500;font-size:28px;margin:4px 0 0;text-align:center}
+.why{font-family:var(--serif);font-size:18px;line-height:1.35;text-align:center;margin:10px 4px 0}
+/* mix */
+.mixfit{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px}
+.scorebar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:12px 0 4px}
+.fix{margin-top:10px;display:grid;gap:6px}
+.fix button{text-align:left;border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:9px 12px;cursor:pointer;font-size:14px}
+.fix button b{font-weight:600}
+.slotrow{margin-top:14px}
+.slothead{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.slothead .nm{font-size:13px;font-weight:500}
+.lock{border:1px solid var(--line);background:transparent;border-radius:999px;padding:4px 10px;font-size:12px;cursor:pointer}
+.lock[aria-pressed="true"]{background:var(--ink);color:var(--panel);border-color:var(--ink)}
+.strip{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x proximity;padding:2px 2px 6px;scrollbar-width:none}
+.strip::-webkit-scrollbar,.chips.scroll::-webkit-scrollbar{display:none}
+.opt{flex:0 0 84px;height:92px;scroll-snap-align:center;border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.opt img{width:100%;height:64px;object-fit:contain}
+.opt span{font-size:10px;line-height:1.1;text-align:center;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.opt[aria-pressed="true"]{border:2px solid var(--ink)}
+.opt.off{opacity:.45}
+.opt.none{font-size:12px;color:var(--mute)}
+/* looks grid */
+.lgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.lcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px;text-align:left;cursor:pointer}
+.lcard .nm{font-family:var(--serif);font-size:18px;line-height:1.1;margin-top:4px}
+.lcard .sub{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--mute);margin-top:4px;letter-spacing:.06em;text-transform:uppercase}
+/* good vs better */
+.gb{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 10px;margin-top:12px}
+.gb-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;text-align:center}
+.gb h4{font:600 20px/1 var(--sans);letter-spacing:-.02em;margin:8px 0 6px;text-transform:uppercase}
+.gb .better h4{color:var(--good)}
+.gb .dots i{width:26px;height:26px}.gb .dots i+i{margin-left:-9px}
+.stack{display:flex;flex-direction:column;align-items:center;height:300px}
+.stack img{object-fit:contain;max-width:100%}
+.stack .st{height:38%}.stack .sb{height:44%;margin-top:-3%}.stack .ss{height:20%;margin-top:-4%}
+.gb p{font-size:12px;color:var(--mute);margin:4px 0 0}
+.gb .note{font-family:var(--serif);font-size:17px;text-align:center;margin:10px 4px 0;color:var(--ink)}
+/* closet */
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.pc{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:6px;text-align:center;cursor:pointer}
+.pc img{width:100%;aspect-ratio:1;object-fit:contain}
+.pc .nm{font-size:12px;line-height:1.2;margin-top:2px}
+.pc .ct{font-size:11px;color:var(--mute)}
+.pc.add{display:flex;flex-direction:column;align-items:center;justify-content:center;border-style:dashed;min-height:130px;color:var(--mute)}
+.pc.add b{font-size:34px;font-weight:300;line-height:1;color:var(--ink)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.seg button{border:0;background:transparent;padding:6px 12px;font-size:12px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--panel)}
+/* insights */
+.bar{display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.bar img{width:44px;height:44px;object-fit:contain}
+.bar .n{font-weight:600}
+.buy{display:grid;grid-template-columns:22px 1fr auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
+.buy i{width:22px;height:22px;border-radius:50%;display:block;box-shadow:0 1px 3px var(--shadow)}
+.plus{font-weight:600;color:var(--good)}
+/* sheet */
+.sheet{position:fixed;inset:0;z-index:40;display:none}
+.sheet.open{display:block}
+.sheet .scrim{position:absolute;inset:0;background:rgba(29,27,25,.35)}
+.sheet .panel{position:absolute;left:0;right:0;bottom:0;max-width:430px;margin:0 auto;background:var(--bg);border-radius:18px 18px 0 0;max-height:92vh;overflow-y:auto;padding:10px 16px calc(24px + env(safe-area-inset-bottom));box-shadow:0 -8px 30px rgba(0,0,0,.18)}
+.grab{width:40px;height:4px;border-radius:2px;background:var(--line);margin:0 auto 8px}
+.sheet h3{font-family:var(--serif);font-weight:500;font-size:28px;margin:4px 0 6px}
+.close{position:absolute;right:12px;top:10px;border:0;background:var(--tile);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:18px}
+.field{display:grid;gap:4px;margin-top:12px}
+.field label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+input[type=text],select{font:inherit;font-size:16px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink);width:100%}
+.big{width:100%;aspect-ratio:1;object-fit:contain;background:var(--panel);border-radius:14px;border:1px solid var(--line)}
+.progress{height:6px;background:var(--tile);border-radius:3px;overflow:hidden;margin-top:8px}
+.progress i{display:block;height:100%;width:0;background:var(--ink);transition:width .2s}
+.tips{margin:8px 0 0;padding-left:18px;color:var(--mute);font-size:14px;display:grid;gap:3px}
+.toast{position:fixed;left:50%;bottom:calc(var(--nav) + 16px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--panel);padding:9px 16px;border-radius:999px;font-size:14px;z-index:60;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw;text-align:center}
+.toast.show{opacity:1}
+.empty{color:var(--mute);text-align:center;padding:24px 8px;font-size:14px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top"><h1>Closet</h1><span class="meta" id="meta"></span></header>
+  <main>
+    <section id="v-today"></section>
+    <section id="v-mix" hidden></section>
+    <section id="v-looks" hidden></section>
+    <section id="v-closet" hidden></section>
+    <section id="v-insights" hidden></section>
+  </main>
+</div>
+<nav class="tabs" aria-label="Sections"><div class="in">
+  <button data-v="today" aria-current="page"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>Today</button>
+  <button data-v="mix"><svg viewBox="0 0 24 24"><path d="M4 7h11M4 17h7M19 7h1M15 17h5"/><circle cx="17" cy="7" r="2"/><circle cx="13" cy="17" r="2"/></svg>Mix</button>
+  <button data-v="looks"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg>Looks</button>
+  <button data-v="closet"><svg viewBox="0 0 24 24"><path d="M12 5a2 2 0 1 1 2 2c-1 0-2 .6-2 1.6V9L3 15.5c-.9.6-.5 2 .6 2h16.8c1.1 0 1.5-1.4.6-2L12 9"/></svg>Closet</button>
+  <button data-v="insights"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Insights</button>
+</div></nav>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true"><div class="scrim"></div><div class="panel"><div class="grab"></div><button class="close" aria-label="Close">×</button><div id="sheetBody"></div></div></div>
+<div class="toast" id="toast" role="status"></div>
+<input type="file" id="fileIn" accept="image/*" hidden>
+
+<script>
+/*__RULES_JS__*/
+</script>
+<script>
+"use strict";
+const DATA = /*__DATA__*/null;
+const R = DATA.rules, OCCS = R.occasions, SLOTS = ["outer","top","bottom","shoes"];
+const SLOTN = {outer:"Outer",top:"Top",bottom:"Bottom",shoes:"Shoes"}, CATN = {outer:"Outer",top:"Tops",bottom:"Bottoms",shoes:"Shoes"};
+const COLOURS = {black:"#1B1B1C",charcoal:"#2E2F33",grey:"#80807E",white:"#F1EFE9",cream:"#E6DFD1",beige:"#C8B8A2",taupe:"#7A6E62",camel:"#B08A5A",brown:"#5A3F30",navy:"#1F2638",blue:"#6B86A6",olive:"#5A5E4C",green:"#3F5A45",burgundy:"#5C2430",rust:"#8A4A2C",dark:"#3F3A38"};
+const TYPES = {
+  top:[{id:"light",label:"T-shirt / light knit",a:{w:1}},{id:"knit",label:"Knit",a:{w:2}},{id:"chunky",label:"Chunky knit",a:{w:3,tex:"chunky"}},{id:"shirt",label:"Shirt",a:{w:1}},{id:"sweat",label:"Sweatshirt",a:{w:2,casual:1}}],
+  outer:[{id:"coat",label:"Coat",a:{w:3}},{id:"pcoat",label:"Patterned coat",a:{w:3,tex:"pattern"}},{id:"puffer",label:"Puffer",a:{w:3,casual:1}},{id:"jacket",label:"Jacket",a:{w:2}},{id:"overshirt",label:"Overshirt",a:{w:2}}],
+  bottom:[{id:"trouser",label:"Trousers",a:{kind:"trouser"}},{id:"chino",label:"Chinos",a:{kind:"chino"}},{id:"denim",label:"Jeans",a:{kind:"denim"}}],
+  shoes:[{id:"loafer",label:"Loafers",a:{style:"loafer"}},{id:"boot",label:"Boots",a:{style:"boot"}},{id:"sneaker",label:"Sneakers",a:{style:"sneaker"}}]};
+const ATTRS = ["w","tex","kind","style","casual"];
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const $ = id => document.getElementById(id);
+
+/* ---------------- storage: IndexedDB, falls back to memory ---------------- */
+const store = (() => {
+  let db = null, mem = {};
+  const open = () => new Promise(res => {
+    try { const r = indexedDB.open("closet", 1);
+      r.onupgradeneeded = () => r.result.createObjectStore("kv");
+      r.onsuccess = () => { db = r.result; res(); }; r.onerror = () => res();
+    } catch (e) { res(); } });
+  const get = k => new Promise(res => { if (!db) return res(mem[k]);
+    try { const r = db.transaction("kv").objectStore("kv").get(k); r.onsuccess = () => res(r.result); r.onerror = () => res(mem[k]); } catch (e) { res(mem[k]); } });
+  const set = (k, v) => new Promise(res => { mem[k] = v; if (!db) return res();
+    try { const t = db.transaction("kv", "readwrite"); t.objectStore("kv").put(v, k); t.oncomplete = () => res(); t.onerror = () => res(); } catch (e) { res(); } });
+  return {open, get, set, persistent: () => !!db};
+})();
+
+/* ---------------- state ---------------- */
+let U = {pieces:{}, hidden:[], looks:[], hiddenLooks:[], wear:[], prefs:{mode:"best", view:{}, loc:null}};
+let P = {}, IMG = DATA.images;
+function rebuild() {
+  P = {};
+  for (const p of DATA.pieces) if (!U.hidden.includes(p.key)) P[p.key] = {...p, ...(U.pieces[p.key] || {})};
+  for (const [k, p] of Object.entries(U.pieces)) if (p.userAdded && !U.hidden.includes(k)) P[k] = p;
+  cache = {};
+}
+async function save(part) { await store.set("U", U); if (part !== "prefs") { rebuild(); } }
+const byCat = c => Object.keys(P).filter(k => P[k].cat === c);
+function img(k) {
+  const p = P[k] || DATA.archetypes.find(a => a.key === k);
+  if (!p) return "";
+  if (p.img) return p.img;
+  const im = IMG[k]; if (!im) return "";
+  const v = U.prefs.view[k] || (U.prefs.mode === "best" ? DATA.defaults[k] : U.prefs.mode);
+  return v === "photo" && im.photo ? im.photo : im.ill;
+}
+const imgTag = (k, cls = "") => k && P[k] ? `<img class="${cls}${P[k].img ? " user" : ""}" src="${img(k)}" alt="${esc(P[k].name)}">` : "";
+const dots = ks => `<span class="dots">${ks.filter(k => k && P[k]).map(k => `<i style="background:${P[k].hex}"></i>`).join("")}</span>`;
+function fitHTML(pcs) { const [o,t,b,s] = pcs; return `<div class="fit ${o && P[o] ? "" : "noouter"}">${imgTag(o,"o")}${imgTag(b,"b")}${imgTag(t,"t")}${imgTag(s,"s")}</div>`; }
+function toast(msg) { const t = $("toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove("show"), 2200); }
+const valid = pcs => pcs.every((k, i) => i === 0 ? (!k || P[k]) : P[k]);
+
+/* ---------------- looks ---------------- */
+function allLooks() {
+  const base = DATA.looks.looks.map((L, i) => ({...L, id: "b" + i})).filter(L => !U.hiddenLooks.includes(L.id));
+  return [...U.looks.map(L => ({...L, mine: true})), ...base].filter(L => valid(L.pcs));
+}
+const lookById = id => allLooks().find(L => L.id === id);
+
+/* ---------------- engine ---------------- */
+let cold = true, cache = {};
+const check = (pcs, occ) => Rules.check(pcs, P, R, occ, cold);
+const verdict = res => Rules.verdict(res, R);
+const strong = (pcs, occ) => verdict(check(pcs, occ)).cls === "ok";
+function optsFor(cat, occ, onlyOcc = true) {
+  const o = byCat(cat).filter(k => !onlyOcc || !occ || (P[k].occasions || []).includes(occ));
+  return cat === "outer" ? [null, ...o] : o;
+}
+function combos(occ, fixed = [undefined, undefined, undefined, undefined]) {
+  const pools = SLOTS.map((c, i) => fixed[i] !== undefined ? [fixed[i]] : optsFor(c, occ));
+  const out = [];
+  for (const a of pools[0]) for (const b of pools[1]) for (const c of pools[2]) for (const d of pools[3]) {
+    const pcs = [a, b, c, d]; if (strong(pcs, occ)) out.push(pcs); }
+  return out;
+}
+function strongFor(o) {  // every Strong match for one occasion, cached until data or season changes
+  const key = "s" + o + cold; return cache[key] || (cache[key] = combos(o));
+}
+function strongAll() { const out = {}; for (const o of OCCS) out[o] = strongFor(o); return out; }
+function versatility() {
+  const key = "vers" + cold; if (cache[key]) return cache[key];
+  const n = {}; Object.keys(P).forEach(k => n[k] = 0);
+  const all = strongAll(); for (const o of OCCS) for (const pcs of all[o]) pcs.forEach(k => { if (k) n[k]++; });
+  return cache[key] = n;
+}
+function fixIt(cur, occ, locks) {
+  const free = SLOTS.map((_, i) => i).filter(i => !locks[i]);
+  const vers = cache["vers" + cold] || {}, out = [];   // rank by versatility only if already scored
+  for (const i of free) for (const k of optsFor(SLOTS[i], occ)) {
+    if (k === cur[i]) continue; const c = [...cur]; c[i] = k;
+    if (strong(c, occ)) out.push({pcs: c, swaps: [[i, cur[i], k]], score: vers[k] || 0});
+  }
+  if (!out.length) for (let a = 0; a < free.length; a++) for (let b = a + 1; b < free.length; b++) {
+    const i = free[a], j = free[b];
+    for (const k of optsFor(SLOTS[i], occ)) for (const m of optsFor(SLOTS[j], occ)) {
+      if (k === cur[i] || m === cur[j]) continue; const c = [...cur]; c[i] = k; c[j] = m;
+      if (strong(c, occ)) out.push({pcs: c, swaps: [[i, cur[i], k], [j, cur[j], m]], score: (vers[k] || 0) + (vers[m] || 0)});
+    }
+  }
+  return out.sort((x, y) => y.score - x.score).slice(0, 3);
+}
+function suggestFor(key, n = 3) {   // diverse Strong matches that use one piece
+  const p = P[key], i = SLOTS.indexOf(p.cat), picked = [];
+  let cands = [];
+  for (const o of p.occasions || OCCS) { const fx = [undefined, undefined, undefined, undefined]; fx[i] = key;
+    for (const pcs of combos(o, fx)) cands.push({occ: o, pcs}); }
+  const saved = new Set(allLooks().map(L => L.pcs.join()));
+  cands = cands.filter(c => !saved.has(c.pcs.join()));
+  while (cands.length && picked.length < n) {
+    let best = null, bs = Infinity;
+    for (const c of cands) {
+      const s = picked.filter(x => x.occ === c.occ).length * 10 + Math.max(0, ...picked.map(x => x.pcs.filter((k, j) => k === c.pcs[j]).length)) + (c.pcs[0] ? 0 : 0.5) + Math.random() * 0.3;
+      if (s < bs) { bs = s; best = c; } }
+    picked.push(best); cands = cands.filter(c => c !== best);
+  }
+  return picked;
+}
+function autoName(pcs) {
+  const t = P[pcs[1]], b = P[pcs[2]]; if (!t || !b) return "New look";
+  const cap = s => s[0].toUpperCase() + s.slice(1);
+  return t.colour === b.colour ? `Tonal ${cap(t.colour)}` : `${cap(t.colour)} & ${cap(b.colour)}`;
+}
+function explain(pcs, occ) {
+  const res = check(pcs, occ), ok = res.filter(r => r.lvl === "ok").map(r => r.msg.toLowerCase());
+  return ok.length ? ok.slice(0, 2).join("; ").replace(/^./, c => c.toUpperCase()) + "." : "";
+}
+
+/* ---------------- weather ---------------- */
+const WX = {0:"Clear",1:"Mostly clear",2:"Partly cloudy",3:"Overcast",45:"Fog",48:"Fog",51:"Drizzle",53:"Drizzle",55:"Drizzle",61:"Light rain",63:"Rain",65:"Heavy rain",71:"Snow",73:"Snow",75:"Heavy snow",80:"Showers",81:"Showers",82:"Heavy showers",95:"Thunder"};
+let weather = null;
+async function loadWeather() {
+  const loc = U.prefs.loc || {lat: 55.68, lon: 12.57, name: "Copenhagen"};
+  try {
+    const ctl = new AbortController(); setTimeout(() => ctl.abort(), 7000);
+    const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${loc.lat}&longitude=${loc.lon}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=1`, {signal: ctl.signal});
+    const j = await r.json();
+    weather = {t: Math.round(j.current.temperature_2m), code: j.current.weather_code, hi: Math.round(j.daily.temperature_2m_max[0]), lo: Math.round(j.daily.temperature_2m_min[0]), place: loc.name};
+    cold = weather.lo < 14 || weather.t < 14;
+  } catch (e) { weather = {err: true, place: loc.name}; cold = R.warmth.months.includes(new Date().getMonth() + 1); }
+  cache = {};
+}
+
+/* ---------------- views ---------------- */
+let view = "today";
+function show(v) {
+  view = v;
+  document.querySelectorAll("nav.tabs button").forEach(b => b.toggleAttribute("aria-current", false) || (b.dataset.v === v && b.setAttribute("aria-current", "page")));
+  ["today","mix","looks","closet","insights"].forEach(x => $("v-" + x).hidden = x !== v);
+  render(); window.scrollTo(0, 0);
+  try { localStorage.setItem("closet_tab", v); } catch (e) {}
+}
+function render() {
+  $("meta").textContent = `${Object.keys(P).length} pieces · ${allLooks().length} looks`;
+  ({today: renderToday, mix: renderMix, looks: renderLooks, closet: renderCloset, insights: renderInsights})[view]();
+}
+
+/* ---- today ---- */
+let todayOcc = (() => { const d = new Date(), h = d.getHours(), wd = d.getDay(); return h >= 17 ? "Evening" : (wd === 0 || wd === 6) ? "Weekend" : "Office"; })();
+let todayIdx = 0;
+function todayCandidates() {
+  const last = {}; U.wear.forEach(w => last[w.pcs.join()] = w.date);
+  const saved = allLooks().filter(L => L.occ === todayOcc && strong(L.pcs, todayOcc));
+  saved.sort((a, b) => (last[a.pcs.join()] || "").localeCompare(last[b.pcs.join()] || ""));
+  const extra = strongFor(todayOcc).filter(p => !saved.some(L => L.pcs.join() === p.join()))
+    .sort(() => Math.random() - .5).slice(0, 10).map(pcs => ({pcs, occ: todayOcc, name: autoName(pcs), why: explain(pcs, todayOcc), fresh: true}));
+  return [...saved, ...extra];
+}
+let todayList = null;
+function renderToday() {
+  if (!todayList) todayList = todayCandidates();
+  const w = weather, L = todayList[todayIdx % Math.max(1, todayList.length)];
+  const wx = !w ? `<span class="muted">Checking the weather…</span>` : w.err
+    ? `<div><div class="meta">${esc(w.place)}</div><div class="small muted">Weather offline, using the season: ${cold ? "cold months" : "mild months"}.</div></div>`
+    : `<div><div class="meta">${esc(w.place)} · ${WX[w.code] || ""}</div><div class="temp">${w.t}°</div><div class="small muted">${w.lo}° to ${w.hi}° today · ${cold ? "dress warm" : "light layers are fine"}</div></div>`;
+  const worn = U.wear.filter(x => x.date === new Date().toISOString().slice(0, 10));
+  $("v-today").innerHTML = `
+  <div class="card weather">${wx}<button class="btn soft" id="locBtn" aria-label="Use my location">📍</button></div>
+  <div class="lbl">Dressing for</div>
+  <div class="chips">${OCCS.map(o => `<button class="chip" aria-pressed="${o === todayOcc}" data-o="${o}">${o}</button>`).join("")}</div>
+  ${L ? `<div class="card today" style="margin-top:14px">
+    <div class="meta" style="text-align:center">${L.fresh ? "New idea" : "From your looks"} · ${todayIdx % todayList.length + 1} of ${todayList.length}</div>
+    <h3>${esc(L.name)}</h3>
+    <div style="text-align:center;margin-top:4px">${dots([L.pcs[1], L.pcs[2]])}</div>
+    ${fitHTML(L.pcs)}
+    <p class="why">${esc(L.why || explain(L.pcs, todayOcc))}</p>
+    <div class="row" style="justify-content:center;margin-top:12px">
+      <button class="btn good" id="wearBtn">Wear this today</button>
+      <button class="btn ghost" id="nextBtn">Another</button>
+      <button class="btn soft" id="remixBtn">Remix</button></div>
+  </div>` : `<p class="empty">No Strong match for ${todayOcc.toLowerCase()} yet. Add pieces or relax a rule.</p>`}
+  ${worn.length ? `<p class="small muted" style="text-align:center;margin-top:10px">Logged today: ${worn.map(x => esc(x.name)).join(", ")}</p>` : ""}`;
+  $("v-today").querySelectorAll("[data-o]").forEach(b => b.onclick = () => { todayOcc = b.dataset.o; todayIdx = 0; todayList = null; renderToday(); });
+  $("locBtn").onclick = () => navigator.geolocation ? navigator.geolocation.getCurrentPosition(async p => {
+      U.prefs.loc = {lat: +p.coords.latitude.toFixed(2), lon: +p.coords.longitude.toFixed(2), name: "Your location"}; await save("prefs");
+      await loadWeather(); todayList = null; renderToday(); }, () => toast("Location not allowed")) : toast("No location on this device");
+  if (!L) return;
+  $("nextBtn").onclick = () => { todayIdx++; renderToday(); };
+  $("remixBtn").onclick = () => openMix(L.pcs, todayOcc);
+  $("wearBtn").onclick = async () => { U.wear.push({date: new Date().toISOString().slice(0, 10), pcs: L.pcs, name: L.name}); await save("wear"); toast("Logged. Enjoy the day."); renderToday(); };
+}
+
+/* ---- mix ---- */
+let mix = {occ: OCCS[0], cur: null, locks: [false, false, false, false], editing: null, onlyOcc: true};
+function openMix(pcs, occ, editing = null) { mix.cur = [...pcs]; mix.occ = occ || mix.occ; mix.editing = editing; mix.locks = [false, false, false, false]; show("mix"); }
+function renderMix() {
+  if (!mix.cur || !valid(mix.cur)) { const L = allLooks().find(L => L.occ === mix.occ) || allLooks()[0];
+    mix.cur = L ? [...L.pcs] : [null, ...SLOTS.slice(1).map(c => byCat(c)[0])]; }
+  const res = check(mix.cur, mix.occ), v = verdict(res);
+  const fixes = v.cls === "ok" ? [] : fixIt(mix.cur, mix.occ, mix.locks);
+  const editingLook = mix.editing && lookById(mix.editing);
+  $("v-mix").innerHTML = `
+  <div class="chips scroll">${OCCS.map(o => `<button class="chip" aria-pressed="${o === mix.occ}" data-o="${o}">${o}</button>`).join("")}
+    <button class="chip" id="coldChip" aria-pressed="${cold}">${cold ? "Cold day" : "Mild day"}</button></div>
+  <div class="mixfit" style="margin-top:12px">${fitHTML(mix.cur)}</div>
+  <div class="scorebar"><div class="verdict v-${v.cls}" aria-live="polite">${v.txt}</div>
+    <div class="row"><button class="btn soft" id="shufBtn" title="Keeps locked pieces">Shuffle</button><button class="btn" id="saveBtn">${editingLook ? "Update" : "Save"}</button></div></div>
+  <ul class="notes">${res.map(r => `<li><span class="v-${r.lvl}">${r.lvl === "ok" ? "✓" : r.lvl === "warn" ? "!" : "✗"}</span><span>${esc(r.msg)}</span></li>`).join("")}</ul>
+  ${fixes.length ? `<div class="fix"><div class="lbl" style="margin:10px 0 0">Fix it · smallest change to a Strong match</div>${fixes.map((f, i) =>
+    `<button data-fix="${i}">${f.swaps.map(([s, a, b]) => `Swap <b>${esc(a ? P[a].name : "no outer")}</b> → <b>${esc(b ? P[b].name : "no outer")}</b>`).join(" and ")}</button>`).join("")}</div>`
+    : v.cls !== "ok" ? `<p class="small muted">No single or double swap fixes this with the locked pieces. Unlock one.</p>` : ""}
+  ${SLOTS.map((c, i) => { const opts = optsFor(c, mix.occ, mix.onlyOcc);
+    if (mix.cur[i] !== undefined && !opts.includes(mix.cur[i])) opts.unshift(mix.cur[i]);
+    return `<div class="slotrow"><div class="slothead"><span class="nm">${SLOTN[c]} · <span class="muted">${esc(mix.cur[i] ? P[mix.cur[i]].name : "none")}</span></span>
+      <button class="lock" data-lock="${i}" aria-pressed="${mix.locks[i]}">${mix.locks[i] ? "Locked" : "Lock"}</button></div>
+      <div class="strip" data-slot="${i}">${opts.map(k => k === null
+        ? `<button class="opt none" data-k="" aria-pressed="${!mix.cur[i]}">No outer</button>`
+        : `<button class="opt ${(P[k].occasions || []).includes(mix.occ) ? "" : "off"}" data-k="${k}" aria-pressed="${k === mix.cur[i]}"><img src="${img(k)}" alt=""><span>${esc(P[k].name)}</span></button>`).join("")}</div></div>`; }).join("")}
+  <div class="row" style="margin-top:14px;justify-content:space-between"><label class="small"><input type="checkbox" id="onlyOcc" ${mix.onlyOcc ? "checked" : ""}> Only ${mix.occ.toLowerCase()} pieces</label>
+    ${editingLook ? `<button class="btn ghost" id="asNew">Save as new</button>` : ""}</div>`;
+  const root = $("v-mix");
+  root.querySelectorAll("[data-o]").forEach(b => b.onclick = () => { mix.occ = b.dataset.o; renderMix(); });
+  $("coldChip").onclick = () => { cold = !cold; cache = {}; todayList = null; renderMix(); };
+  root.querySelectorAll(".strip").forEach(st => {
+    const sel = st.querySelector('[aria-pressed="true"]'); if (sel) st.scrollLeft = sel.offsetLeft - st.clientWidth / 2 + sel.clientWidth / 2;
+    st.onclick = e => { const b = e.target.closest(".opt"); if (!b) return; const i = +st.dataset.slot; mix.cur[i] = b.dataset.k || null; renderMix(); };
+  });
+  root.querySelectorAll("[data-lock]").forEach(b => b.onclick = () => { const i = +b.dataset.lock; mix.locks[i] = !mix.locks[i]; renderMix(); });
+  root.querySelectorAll("[data-fix]").forEach(b => b.onclick = () => { mix.cur = fixes[+b.dataset.fix].pcs; renderMix(); toast("Fixed"); });
+  $("onlyOcc").onchange = e => { mix.onlyOcc = e.target.checked; renderMix(); };
+  $("shufBtn").onclick = () => {
+    const fx = mix.cur.map((k, i) => mix.locks[i] ? k : undefined);
+    const pool = combos(mix.occ, fx).filter(p => p.join() !== mix.cur.join());
+    if (!pool.length) return toast("No other Strong match with these locks");
+    mix.cur = pool[Math.floor(Math.random() * pool.length)]; renderMix();
+  };
+  const saveLook = async asNew => {
+    const name = prompt("Name this look", editingLook && !asNew ? editingLook.name : autoName(mix.cur)); if (name === null) return;
+    const why = explain(mix.cur, mix.occ);
+    if (editingLook && !asNew) {
+      if (editingLook.mine) Object.assign(U.looks.find(L => L.id === editingLook.id), {name, pcs: [...mix.cur], occ: mix.occ, why});
+      else { U.hiddenLooks.push(editingLook.id); U.looks.unshift({id: "u" + Date.now(), name, occ: mix.occ, pcs: [...mix.cur], why: editingLook.why}); }
+    } else U.looks.unshift({id: "u" + Date.now(), name, occ: mix.occ, pcs: [...mix.cur], why});
+    await save("looks"); mix.editing = null; todayList = null; toast(v.cls === "ok" ? "Saved to your looks" : "Saved (not yet a Strong match)"); renderMix();
+  };
+  $("saveBtn").onclick = () => saveLook(false);
+  if ($("asNew")) $("asNew").onclick = () => saveLook(true);
+}
+
+/* ---- looks ---- */
+let looksSeg = "all", looksOcc = "All";
+function lookCard(L) {
+  const v = verdict(check(L.pcs, L.occ));
+  return `<button class="lcard" data-look="${L.id}">${fitHTML(L.pcs)}<div class="nm">${esc(L.name)}</div>
+    <div class="sub"><span class="vdot ${v.cls}"></span>${L.occ}${L.mine ? " · mine" : ""}</div></button>`;
+}
+function renderLooks() {
+  let list = allLooks();
+  if (looksSeg === "mine") list = list.filter(L => L.mine);
+  if (looksOcc !== "All") list = list.filter(L => L.occ === looksOcc);
+  const gb = DATA.looks.gb.filter(g => [...g.good, ...g.better].every(k => P[k]));
+  const stack = ([t, b, s]) => `<div class="stack">${imgTag(t, "st")}${imgTag(b, "sb")}${imgTag(s, "ss")}</div>`;
+  $("v-looks").innerHTML = `
+  <div class="seg" role="group">${[["all","All"],["mine","Mine"],["gb","Good vs Better"]].map(([k, l]) => `<button data-seg="${k}" aria-pressed="${k === looksSeg}">${l}</button>`).join("")}</div>
+  ${looksSeg === "gb" ? `<p class="small muted" style="margin:12px 0 0">Same trousers, one swap. Why the second one works better.</p>` + gb.map(g => `<div class="gb"><div class="gb-row">
+      <div>${dots(g.good.slice(0, 2))}<h4>Good</h4>${stack(g.good)}<p>${esc(g.gl)}</p></div>
+      <div class="better">${dots(g.better.slice(0, 2))}<h4>Better</h4>${stack(g.better)}<p>${esc(g.bl)}</p></div></div>
+      <p class="note">${esc(g.note)}</p><div class="row" style="justify-content:center;margin-top:8px"><button class="btn soft" data-gbshare='${esc(JSON.stringify(g))}'>Share</button></div></div>`).join("")
+  : `<div class="chips scroll" style="margin-top:12px">${["All", ...OCCS].map(o => `<button class="chip" aria-pressed="${o === looksOcc}" data-lo="${o}">${o}</button>`).join("")}</div>
+     <div class="lgrid">${list.map(lookCard).join("")}</div>
+     ${list.length ? "" : `<p class="empty">${looksSeg === "mine" ? "Nothing saved yet. Build one in Mix and tap Save." : "No looks here."}</p>`}`}`;
+  const root = $("v-looks");
+  root.querySelectorAll("[data-seg]").forEach(b => b.onclick = () => { looksSeg = b.dataset.seg; renderLooks(); });
+  root.querySelectorAll("[data-lo]").forEach(b => b.onclick = () => { looksOcc = b.dataset.lo; renderLooks(); });
+  root.querySelectorAll("[data-look]").forEach(b => b.onclick = () => lookSheet(b.dataset.look));
+  root.querySelectorAll("[data-gbshare]").forEach(b => b.onclick = () => shareGB(JSON.parse(b.dataset.gbshare)));
+}
+function lookSheet(id) {
+  const L = lookById(id); if (!L) return;
+  const res = check(L.pcs, L.occ), v = verdict(res);
+  const order = [L.pcs[1], L.pcs[0], L.pcs[2], L.pcs[3]].filter(Boolean);
+  openSheet(`<div class="meta">${L.occ}${L.mine ? " · your look" : ""}</div><h3>${esc(L.name)}</h3>
+    ${fitHTML(L.pcs)}
+    <div class="pgrid" style="grid-template-columns:repeat(${order.length},1fr)">${order.map(k => `<button class="pc" data-piece="${k}"><img src="${img(k)}" alt=""><div class="nm">${esc(P[k].short || P[k].name)}</div></button>`).join("")}</div>
+    ${L.why ? `<p class="why">${esc(L.why)}</p>` : ""}
+    <div class="scorebar"><span class="verdict v-${v.cls}">${v.txt}</span></div>
+    <div class="row">${res.map(r => `<span class="ck ${r.lvl}" title="${esc(r.msg)}">${r.short}</span>`).join("")}</div>
+    <div class="row" style="margin-top:16px"><button class="btn" id="lsRemix">${L.mine ? "Edit" : "Remix"}</button><button class="btn good" id="lsWear">Wear today</button>
+      <button class="btn soft" id="lsShare">Share</button><button class="btn ghost" id="lsDel">${L.mine ? "Delete" : "Hide"}</button></div>`);
+  $("lsRemix").onclick = () => { closeSheet(); openMix(L.pcs, L.occ, L.id); };
+  $("lsWear").onclick = async () => { U.wear.push({date: new Date().toISOString().slice(0, 10), pcs: L.pcs, name: L.name}); await save("wear"); toast("Logged for today"); };
+  $("lsShare").onclick = () => shareLook(L);
+  $("lsDel").onclick = async () => { if (L.mine) U.looks = U.looks.filter(x => x.id !== L.id); else U.hiddenLooks.push(L.id);
+    await save("looks"); closeSheet(); todayList = null; render(); toast(L.mine ? "Deleted" : "Hidden"); };
+  $("sheetBody").querySelectorAll("[data-piece]").forEach(b => b.onclick = () => pieceSheet(b.dataset.piece));
+}
+
+/* ---- closet ---- */
+let closetCat = "all";
+function renderCloset() {
+  const counts = {}; allLooks().forEach(L => L.pcs.forEach(k => k && (counts[k] = (counts[k] || 0) + 1)));
+  const cats = closetCat === "all" ? SLOTS : [closetCat];
+  const modes = [["best","Best"],["photo","Photos"],["ill","Illustrations"]];
+  $("v-closet").innerHTML = `
+  <div class="chips scroll">${[["all","All"], ...SLOTS.map(c => [c, CATN[c]])].map(([k, l]) => `<button class="chip" aria-pressed="${k === closetCat}" data-c="${k}">${l}</button>`).join("")}</div>
+  <div class="row" style="margin-top:10px;justify-content:space-between"><span class="small muted">Show pieces as</span>
+    <div class="seg">${modes.map(([k, l]) => `<button data-mode="${k}" aria-pressed="${U.prefs.mode === k}">${l}</button>`).join("")}</div></div>
+  ${cats.map((c, ci) => `<div class="lbl">${CATN[c]} · ${byCat(c).length}</div><div class="pgrid">
+    ${ci === 0 ? `<button class="pc add" id="addBtn"><b>+</b><span class="small">Add a piece</span></button>` : ""}
+    ${byCat(c).map(k => `<button class="pc" data-piece="${k}"><img src="${img(k)}" alt="" class="${P[k].img ? "user" : ""}"><div class="nm">${esc(P[k].name)}</div><div class="ct">${counts[k] || 0} look${counts[k] === 1 ? "" : "s"}</div></button>`).join("")}</div>`).join("")}
+  <div class="card" style="margin-top:20px"><div class="lbl" style="margin-top:0">Backup</div>
+    <p class="small muted" style="margin:0 0 10px">Your edits live on this phone${store.persistent() ? "" : " (storage is off in this browser mode, so they reset on reload)"}. Export to keep a copy or send new pieces for studio-quality photos.</p>
+    <div class="row"><button class="btn soft" id="expBtn">Export</button><button class="btn soft" id="impBtn">Import</button><button class="btn ghost" id="resetBtn">Reset edits</button></div></div>`;
+  const root = $("v-closet");
+  root.querySelectorAll("[data-c]").forEach(b => b.onclick = () => { closetCat = b.dataset.c; renderCloset(); });
+  root.querySelectorAll("[data-mode]").forEach(b => b.onclick = async () => { U.prefs.mode = b.dataset.mode; U.prefs.view = {}; await save("prefs"); renderCloset(); });
+  root.querySelectorAll("[data-piece]").forEach(b => b.onclick = () => pieceSheet(b.dataset.piece));
+  $("addBtn").onclick = addFlow;
+  $("expBtn").onclick = exportData; $("impBtn").onclick = importData;
+  $("resetBtn").onclick = async () => { if (!confirm("Remove all your edits, added pieces, saved looks and wear log?")) return;
+    U = {pieces:{}, hidden:[], looks:[], hiddenLooks:[], wear:[], prefs:{mode:"best", view:{}, loc:null}}; await save(); todayList = null; render(); toast("Back to the original closet"); };
+}
+function typeOf(p) {
+  const T = TYPES[p.cat] || [];
+  if (p.cat === "top") { if (p.tex === "chunky") return "chunky"; if (p.casual && p.w === 2) return "sweat";
+    if (/(^|\s)(over)?shirt\b/i.test((p.short || "") + " " + p.name) && !/sweat/i.test(p.name)) return "shirt"; return p.w === 1 || p.w === undefined ? "light" : "knit"; }
+  if (p.cat === "outer") { if (p.tex === "pattern") return "pcoat"; if (p.casual) return "puffer"; if (/overshirt/i.test(p.name)) return "overshirt"; return p.w >= 3 ? "coat" : "jacket"; }
+  if (p.cat === "bottom") return p.kind || "trouser";
+  if (p.cat === "shoes") return p.style || "loafer";
+  return T[0] && T[0].id;
+}
+function pieceForm(p) {
+  const t = typeOf(p);
+  return `<div class="field"><label for="fName">Name</label><input type="text" id="fName" value="${esc(p.name)}" maxlength="40"></div>
+  <div class="field"><label>Category</label><div class="chips" id="fCat">${SLOTS.map(c => `<button class="chip" data-v="${c}" aria-pressed="${c === p.cat}">${SLOTN[c]}</button>`).join("")}</div></div>
+  <div class="field"><label>Type</label><div class="chips" id="fType">${TYPES[p.cat].map(x => `<button class="chip" data-v="${x.id}" aria-pressed="${x.id === t}">${x.label}</button>`).join("")}</div></div>
+  <div class="field"><label for="fColour">Colour</label><div class="row"><span class="dots"><i id="fSw" style="background:${p.hex}"></i></span>
+    <select id="fColour" style="flex:1">${Object.keys(COLOURS).map(c => `<option ${c === p.colour ? "selected" : ""}>${c}</option>`).join("")}${COLOURS[p.colour] ? "" : `<option selected>${esc(p.colour)}</option>`}</select></div></div>
+  <div class="field"><label>Occasions</label><div class="chips" id="fOcc">${OCCS.map(o => `<button class="chip" data-v="${o}" aria-pressed="${(p.occasions || []).includes(o)}">${o}</button>`).join("")}</div></div>`;
+}
+function bindForm(p, onCat) {
+  const body = $("sheetBody");
+  body.querySelectorAll("#fCat .chip").forEach(b => b.onclick = () => { p.cat = b.dataset.v; onCat(); });
+  body.querySelectorAll("#fType .chip").forEach(b => b.onclick = () => { body.querySelectorAll("#fType .chip").forEach(x => x.setAttribute("aria-pressed", x === b)); });
+  body.querySelectorAll("#fOcc .chip").forEach(b => b.onclick = () => b.setAttribute("aria-pressed", b.getAttribute("aria-pressed") !== "true"));
+  $("fColour").onchange = e => { $("fSw").style.background = COLOURS[e.target.value] || p.hex; };
+}
+function readForm(p) {
+  const body = $("sheetBody");
+  const tid = (body.querySelector('#fType [aria-pressed="true"]') || {}).dataset?.v || TYPES[p.cat][0].id;
+  const type = TYPES[p.cat].find(x => x.id === tid) || TYPES[p.cat][0];
+  const colour = $("fColour").value, occ = [...body.querySelectorAll('#fOcc [aria-pressed="true"]')].map(b => b.dataset.v);
+  const out = {name: $("fName").value.trim() || p.name, cat: p.cat, colour, occasions: occ.length ? occ : [...OCCS], short: type.label.split(" / ")[0]};
+  ATTRS.forEach(a => out[a] = undefined); Object.assign(out, type.a);
+  if (colour !== p.colour && COLOURS[colour]) out.hex = COLOURS[colour];
+  return out;
+}
+function pieceSheet(k) {
+  const p = {...P[k]}, im = IMG[k], counts = allLooks().filter(L => L.pcs.includes(k));
+  const vers = versatility()[k] || 0;
+  const draw = () => {
+    const v = U.prefs.view[k] || (U.prefs.mode === "best" ? DATA.defaults[k] : U.prefs.mode);
+    openSheet(`<div class="meta">${SLOTN[p.cat]} · ${vers} possible Strong matches</div><h3>${esc(p.name)}</h3>
+    <img class="big ${p.img ? "user" : ""}" src="${img(k)}" alt="${esc(p.name)}">
+    ${im && im.photo ? `<div class="row" style="justify-content:center;margin-top:8px"><div class="seg">${[["photo","Studio photo"],["ill","Illustration"]].map(([x, l]) => `<button data-view="${x}" aria-pressed="${(v === "photo" && im.photo ? "photo" : "ill") === x}">${l}</button>`).join("")}</div></div>` : ""}
+    ${pieceForm(p)}
+    <div class="row" style="margin-top:16px"><button class="btn" id="psSave">Save</button><button class="btn soft" id="psMix">Mix with it</button><button class="btn ghost" id="psHide">Remove</button></div>
+    <div class="lbl">In ${counts.length} saved look${counts.length === 1 ? "" : "s"}</div>
+    <div class="lgrid">${counts.slice(0, 6).map(lookCard).join("")}</div>`);
+    bindForm(p, () => { Object.assign(p, readForm(p)); draw(); });
+    $("sheetBody").querySelectorAll("[data-view]").forEach(b => b.onclick = async () => { U.prefs.view[k] = b.dataset.view; await save("prefs"); draw(); render(); });
+    $("psSave").onclick = async () => { const f = readForm(p);
+      U.pieces[k] = P[k].userAdded ? {...P[k], ...f} : {...(U.pieces[k] || {}), ...f};
+      await save("pieces"); todayList = null; closeSheet(); render(); toast("Saved"); };
+    $("psMix").onclick = () => { closeSheet(); const i = SLOTS.indexOf(P[k].cat); const occ = (P[k].occasions || OCCS)[0];
+      const fx = [undefined, undefined, undefined, undefined]; fx[i] = k; const pool = combos(occ, fx);
+      const pcs = pool.length ? pool[Math.floor(Math.random() * pool.length)] : (() => { const c = [...(mix.cur || allLooks()[0].pcs)]; c[i] = k; return c; })();
+      mix.locks = [false, false, false, false]; mix.locks[i] = true; mix.cur = pcs; mix.occ = occ; mix.editing = null; show("mix"); };
+    $("psHide").onclick = async () => { if (!confirm(`Remove ${p.name} from the closet? Looks that use it are hidden too.`)) return;
+      if (P[k].userAdded) delete U.pieces[k]; else U.hidden.push(k); await save("pieces"); todayList = null; closeSheet(); render(); toast("Removed"); };
+    $("sheetBody").querySelectorAll("[data-look]").forEach(b => b.onclick = () => lookSheet(b.dataset.look));
+  };
+  draw();
+}
+
+/* ---- add a piece ---- */
+const CAST = [0.962, 1.037, 1.18];
+async function loadImage(src) { const im = new Image(); im.src = src; await im.decode(); return im; }
+async function prepare(blobOrUrl, cut) {
+  const src = typeof blobOrUrl === "string" ? blobOrUrl : URL.createObjectURL(blobOrUrl);
+  const im = await loadImage(src), s = Math.min(1, 1000 / Math.max(im.width, im.height));
+  const w = Math.round(im.width * s), h = Math.round(im.height * s);
+  const c = document.createElement("canvas"); c.width = w; c.height = h; const x = c.getContext("2d");
+  x.drawImage(im, 0, 0, w, h);
+  const d = x.getImageData(0, 0, w, h), a = d.data;
+  let x0 = w, y0 = h, x1 = 0, y1 = 0; const sample = [[], [], []];
+  for (let i = 0, p = 0; i < a.length; i += 4, p++) {
+    if (cut && a[i + 3] < 30) continue;
+    for (let c2 = 0; c2 < 3; c2++) a[i + c2] = Math.min(255, a[i + c2] * (1 + (CAST[c2] - 1) * 0.85));
+    const px = p % w, py = (p / w) | 0;
+    if (px < x0) x0 = px; if (px > x1) x1 = px; if (py < y0) y0 = py; if (py > y1) y1 = py;
+    if ((p & 7) === 0 && (!cut || a[i + 3] > 200)) for (let c2 = 0; c2 < 3; c2++) sample[c2].push(a[i + c2]);
+  }
+  x.putImageData(d, 0, 0);
+  if (!cut) { const m = Math.min(w, h); x0 = (w - m) / 2; y0 = (h - m) / 2; x1 = x0 + m; y1 = y0 + m; }
+  const bw = x1 - x0 + 1, bh = y1 - y0 + 1, S = 800, pad = cut ? 0.06 : 0, sc = S * (1 - 2 * pad) / Math.max(bw, bh);
+  const o = document.createElement("canvas"); o.width = S; o.height = S; const ox = o.getContext("2d");
+  ox.drawImage(c, x0, y0, bw, bh, (S - bw * sc) / 2, (S - bh * sc) / 2, bw * sc, bh * sc);
+  let url = o.toDataURL("image/webp", 0.86); if (!url.startsWith("data:image/webp")) url = o.toDataURL(cut ? "image/png" : "image/jpeg", 0.88);
+  const med = sample.map(v => { v.sort((p, q) => p - q); return v[v.length >> 1] || 128; });
+  const hex = "#" + med.map(v => Math.round(v).toString(16).padStart(2, "0")).join("").toUpperCase();
+  const lum = c2 => { const h2 = c2.slice(1); return [0, 2, 4].map(i => parseInt(h2.slice(i, i + 2), 16)); };
+  const colour = Object.entries(COLOURS).sort(([, p1], [, p2]) => {
+    const d1 = lum(p1).reduce((s2, v, i) => s2 + (v - med[i]) ** 2 * [.3, .59, .11][i], 0), d2 = lum(p2).reduce((s2, v, i) => s2 + (v - med[i]) ** 2 * [.3, .59, .11][i], 0); return d1 - d2; })[0][0];
+  return {url, hex, colour};
+}
+let bgLib = null;
+async function cutout(file, onProgress) {
+  if (!bgLib) bgLib = await import("https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/+esm");
+  return bgLib.removeBackground(file, {model: "small", output: {format: "image/png"}, progress: onProgress});
+}
+function addFlow() {
+  openSheet(`<h3>Add a piece</h3>
+    <p class="small muted" style="margin:0">Snap it or pick a photo. The background is removed on your phone, nothing is uploaded.</p>
+    <ul class="tips"><li>Lay it flat on a plain surface, whole garment in frame</li><li>Stand so your shadow does not fall on it</li><li>Shoes: the pair, from above</li></ul>
+    <div class="row" style="margin-top:14px"><button class="btn" id="pickBtn">Take or choose a photo</button></div>`);
+  $("pickBtn").onclick = () => { $("fileIn").value = ""; $("fileIn").click(); };
+}
+$("fileIn").onchange = async e => {
+  const file = e.target.files[0]; if (!file) return;
+  openSheet(`<h3>Cutting out…</h3><img class="big" id="prev" src="${URL.createObjectURL(file)}" alt="">
+    <p class="small muted" id="stat">Starting</p><div class="progress"><i id="bar"></i></div>`);
+  let res, cut = true;
+  try {
+    const blob = await cutout(file, (key, cur, tot) => {
+      const pct = tot ? Math.round(cur / tot * 100) : 0; if ($("bar")) $("bar").style.width = pct + "%";
+      if ($("stat")) $("stat").textContent = key.startsWith("fetch") ? `Downloading the cutout model (first time only) ${pct}%` : "Cutting out…"; });
+    res = await prepare(blob, true);
+  } catch (err) {
+    cut = false; res = await prepare(file, false);
+    toast("Could not remove the background here. Using the photo.");
+  }
+  const guess = {cat: "top", name: "", colour: res.colour, hex: res.hex, occasions: [...OCCS]};
+  const draw = () => {
+    openSheet(`<h3>New piece</h3><img class="big ${cut ? "user" : ""}" src="${res.url}" alt="">
+      ${pieceForm({...guess, name: guess.name || `${guess.colour[0].toUpperCase() + guess.colour.slice(1)} ${TYPES[guess.cat][0].label.split(" / ")[0].toLowerCase()}`})}
+      <div class="row" style="margin-top:16px"><button class="btn" id="addSave">Add to closet</button><button class="btn ghost" id="addRetake">Another photo</button></div>`);
+    bindForm(guess, () => { const f = readForm(guess); Object.assign(guess, {name: f.name, colour: f.colour, occasions: f.occasions}); draw(); });
+    $("addRetake").onclick = () => { $("fileIn").value = ""; $("fileIn").click(); };
+    $("addSave").onclick = async () => {
+      const f = readForm(guess); let key = f.name.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "") || "piece";
+      while (P[key] || DATA.images[key]) key += "_2";
+      U.pieces[key] = {key, ...f, hex: f.hex || res.hex, img: res.url, userAdded: true, added: new Date().toISOString().slice(0, 10)};
+      ATTRS.forEach(a => U.pieces[key][a] === undefined && delete U.pieces[key][a]);
+      await save("pieces"); todayList = null; render(); newPieceLooks(key);
+    };
+  };
+  draw();
+};
+function newPieceLooks(key) {
+  const sug = suggestFor(key, 3), p = P[key];
+  openSheet(`<div class="meta">Added</div><h3>${esc(p.name)}</h3>
+    <p class="small muted" style="margin:0 0 6px">${sug.length ? "Three looks it makes with what you own. Save the ones you like." : "No Strong match yet: check its occasions and type, or add a piece that goes with it."}</p>
+    ${sug.map((s, i) => `<div class="card" style="margin-top:10px">${fitHTML(s.pcs)}<div class="row" style="justify-content:space-between;margin-top:6px">
+      <span><b>${esc(autoName(s.pcs))}</b> <span class="muted small">· ${s.occ}</span></span><button class="btn soft" data-sv="${i}">Save look</button></div></div>`).join("")}
+    <div class="row" style="margin-top:14px"><button class="btn" id="npDone">Done</button><button class="btn ghost" id="npMix">Open in Mix</button></div>`);
+  $("sheetBody").querySelectorAll("[data-sv]").forEach(b => b.onclick = async () => { const s = sug[+b.dataset.sv];
+    U.looks.unshift({id: "u" + Date.now(), name: autoName(s.pcs), occ: s.occ, pcs: s.pcs, why: explain(s.pcs, s.occ)}); await save("looks");
+    b.disabled = true; b.textContent = "Saved"; todayList = null; });
+  $("npDone").onclick = () => { closeSheet(); render(); };
+  $("npMix").onclick = () => { closeSheet(); const s = sug[0]; if (s) openMix(s.pcs, s.occ); };
+}
+
+/* ---- insights ---- */
+function renderInsights() {
+  $("v-insights").innerHTML = `<p class="empty">Scoring every combination…</p>`;
+  setTimeout(() => {
+    const all = strongAll(), vers = versatility();
+    const ranked = Object.keys(P).sort((a, b) => vers[b] - vers[a]);
+    const last = {}; U.wear.forEach(w => w.pcs.forEach(k => k && (last[k] = w.date)));
+    const since = d => Math.floor((Date.now() - new Date(d)) / 864e5);
+    const sleepy = U.wear.length ? Object.keys(P).filter(k => !last[k] || since(last[k]) > 30) : [];
+    const gaps = DATA.archetypes.filter(a => !Object.values(P).some(p => p.name.toLowerCase() === a.name.toLowerCase())).map(a => {
+      P[a.key] = a; let n = 0; const i = SLOTS.indexOf(a.cat);
+      for (const o of a.occasions) { const fx = [undefined, undefined, undefined, undefined]; fx[i] = a.key; n += combos(o, fx).length; }
+      delete P[a.key]; return {...a, n}; }).sort((x, y) => y.n - x.n).slice(0, 6);
+    const bar = k => `<button class="bar" data-piece="${k}" style="width:100%;background:none;border:0;border-bottom:1px solid var(--line);text-align:left;cursor:pointer"><img src="${img(k)}" alt=""><span>${esc(P[k].name)}<br><span class="small muted">${SLOTN[P[k].cat]}</span></span><span class="n">${vers[k]}</span></button>`;
+    const fams = {}; Object.values(P).forEach(p => (fams[p.colour] = fams[p.colour] || []).push(p));
+    $("v-insights").innerHTML = `
+    <div class="row" style="justify-content:space-between"><div><div class="temp" style="font-size:40px">${OCCS.reduce((s, o) => s + all[o].length, 0).toLocaleString()}</div>
+      <div class="small muted">Strong matches your closet can make (${cold ? "cold" : "mild"} weather)</div></div></div>
+    <div class="row" style="margin-top:8px">${OCCS.map(o => `<span class="chip" aria-pressed="false">${o} ${all[o].length.toLocaleString()}</span>`).join("")}</div>
+    <h2 class="sec">What to buy next</h2><p class="small muted" style="margin:0">New Strong matches each piece would unlock with what you own.</p>
+    ${gaps.map(g => `<div class="buy"><i style="background:${g.hex}"></i><span>${esc(g.name)}<br><span class="small muted">${g.occasions.join(", ")}</span></span><span class="plus">+${g.n.toLocaleString()}</span></div>`).join("")}
+    <h2 class="sec">Work horses</h2><p class="small muted" style="margin:0">In the most Strong matches.</p>${ranked.slice(0, 5).map(bar).join("")}
+    <h2 class="sec">Hard to wear</h2><p class="small muted" style="margin:0">In the fewest. Check their occasions, or pair them with something new.</p>${ranked.slice(-5).reverse().map(bar).join("")}
+    ${U.wear.length ? `<h2 class="sec">Not worn in a month</h2>${sleepy.length ? sleepy.slice(0, 8).map(bar).join("") : `<p class="small muted">Everything has been out recently.</p>`}` : `<h2 class="sec">Wear log</h2><p class="small muted">Tap "Wear this today" on Today and this shows what has not been out in a month.</p>`}
+    <h2 class="sec">Palette</h2><div style="display:grid;gap:6px">${Object.entries(fams).sort((a, b) => b[1].length - a[1].length).map(([c, ps]) =>
+      `<div class="row"><span class="dots"><i style="background:${COLOURS[c] || ps[0].hex}"></i></span><span style="flex:1">${esc(c)}</span><span class="muted small">${ps.length}</span></div>`).join("")}</div>`;
+    $("v-insights").querySelectorAll("[data-piece]").forEach(b => b.onclick = () => pieceSheet(b.dataset.piece));
+  }, 30);
+}
+
+/* ---------------- share as image ---------------- */
+async function renderCard(draw, name) {
+  try { await document.fonts.ready; } catch (e) {}
+  const c = document.createElement("canvas"); c.width = 1080; c.height = 1350; const x = c.getContext("2d");
+  x.fillStyle = "#EDE8E1"; x.fillRect(0, 0, 1080, 1350);
+  await draw(x);
+  const blob = await new Promise(r => c.toBlob(r, "image/png"));
+  const file = new File([blob], name + ".png", {type: "image/png"});
+  if (navigator.canShare && navigator.canShare({files: [file]})) { try { await navigator.share({files: [file], title: name}); return; } catch (e) { if (e.name === "AbortError") return; } }
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = file.name; a.click();
+}
+const BOX = {t: [.01, .03, .52, .46], o: [.47, .01, .52, .58], b: [.06, .47, .42, .52], s: [.52, .63, .44, .34]};
+const BOXN = {t: [.04, .03, .58, .50], b: [.08, .49, .44, .50], s: [.54, .52, .44, .36]};
+async function drawImg(x, src, bx, by, bw, bh) { const im = await loadImage(src); const s = Math.min(bw / im.width, bh / im.height);
+  x.drawImage(im, bx + (bw - im.width * s) / 2, by + (bh - im.height * s) / 2, im.width * s, im.height * s); }
+function drawDots(x, hexes, cx, y, r) { hexes.forEach((h, i) => { x.beginPath(); x.arc(cx + (i - (hexes.length - 1) / 2) * r * 1.4, y, r, 0, 7); x.fillStyle = h; x.fill(); }); }
+function shareLook(L) {
+  renderCard(async x => {
+    x.textAlign = "center"; x.fillStyle = "#1D1B19"; x.font = "500 72px 'Cormorant Garamond', Georgia, serif"; x.fillText(L.name, 540, 130);
+    x.font = "500 24px Jost, sans-serif"; x.fillStyle = "#6F685F"; x.fillText(L.occ.toUpperCase(), 540, 175);
+    drawDots(x, [L.pcs[1], L.pcs[2]].map(k => P[k].hex), 540, 225, 22);
+    const [o, t, b, s] = L.pcs, box = o ? BOX : BOXN, X = 90, Y = 260, S = 900;
+    for (const [k, slot] of [[o, "o"], [b, "b"], [t, "t"], [s, "s"]]) if (k) { const q = box[slot]; await drawImg(x, img(k), X + q[0] * S, Y + q[1] * S, q[2] * S, q[3] * S); }
+    x.font = "italic 34px 'Cormorant Garamond', Georgia, serif"; x.fillStyle = "#1D1B19";
+    wrapText(x, L.why || explain(L.pcs, L.occ), 540, 1235, 900, 40);
+  }, L.name);
+}
+function shareGB(g) {
+  renderCard(async x => {
+    x.textAlign = "center";
+    for (const [col, pcs, lab, cap] of [[270, g.good, "GOOD", g.gl], [810, g.better, "BETTER", g.bl]]) {
+      drawDots(x, pcs.slice(0, 2).map(k => P[k].hex), col, 110, 34);
+      x.font = "600 68px Jost, sans-serif"; x.fillStyle = lab === "GOOD" ? "#1D1B19" : "#3E6A47"; x.fillText(lab, col, 215);
+      await drawImg(x, img(pcs[0]), col - 230, 250, 460, 380); await drawImg(x, img(pcs[1]), col - 230, 610, 460, 440); await drawImg(x, img(pcs[2]), col - 200, 1020, 400, 160);
+      x.font = "500 26px Jost, sans-serif"; x.fillStyle = "#6F685F"; x.fillText(cap, col, 1215);
+    }
+    x.font = "italic 32px 'Cormorant Garamond', Georgia, serif"; x.fillStyle = "#1D1B19"; wrapText(x, g.note, 540, 1275, 960, 38);
+  }, "good-vs-better");
+}
+function wrapText(x, text, cx, y, maxW, lh) { const words = String(text).split(" "); let line = "", lines = [];
+  for (const w of words) { const t = line ? line + " " + w : w; if (x.measureText(t).width > maxW && line) { lines.push(line); line = w; } else line = t; }
+  if (line) lines.push(line); lines.slice(0, 3).forEach((l, i) => x.fillText(l, cx, y + i * lh)); }
+
+/* ---------------- sheet, backup, boot ---------------- */
+function openSheet(html) { $("sheetBody").innerHTML = html; $("sheet").classList.add("open"); document.body.style.overflow = "hidden"; $("sheet").querySelector(".panel").scrollTop = 0; }
+function closeSheet() { $("sheet").classList.remove("open"); document.body.style.overflow = ""; }
+$("sheet").querySelector(".scrim").onclick = closeSheet; $("sheet").querySelector(".close").onclick = closeSheet;
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheet(); });
+function exportData() {
+  const blob = new Blob([JSON.stringify({app: "closet", version: 1, exported: new Date().toISOString(), ...U})], {type: "application/json"});
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `closet-backup-${new Date().toISOString().slice(0, 10)}.json`; a.click();
+}
+function importData() {
+  const inp = document.createElement("input"); inp.type = "file"; inp.accept = "application/json,.json";
+  inp.onchange = async () => { try { const j = JSON.parse(await inp.files[0].text()); if (j.app !== "closet") throw 0;
+      U = {pieces: j.pieces || {}, hidden: j.hidden || [], looks: j.looks || [], hiddenLooks: j.hiddenLooks || [], wear: j.wear || [], prefs: j.prefs || {mode: "best", view: {}, loc: null}};
+      await save(); todayList = null; render(); toast("Backup restored"); } catch (e) { toast("That is not a Closet backup"); } };
+  inp.click();
+}
+document.querySelector("nav.tabs").onclick = e => { const b = e.target.closest("[data-v]"); if (b) show(b.dataset.v); };
+(async () => {
+  await store.open();
+  const saved = await store.get("U"); if (saved) U = {...U, ...saved, prefs: {...U.prefs, ...(saved.prefs || {})}};
+  rebuild();
+  cold = R.warmth.months.includes(new Date().getMonth() + 1);
+  let tab = "today"; try { tab = localStorage.getItem("closet_tab") || "today"; } catch (e) {}
+  show(tab);
+  await loadWeather(); todayList = null; if (view === "today" || view === "mix") render();
+})();
+</script>
+</body>
+</html>

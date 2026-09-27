@@ -67,6 +67,10 @@ def build_outputs(highlight=None):
     import build_app
     out = build_app.build()
     log(f'app: {os.path.relpath(out, ROOT)}')
+    closet = os.path.join(ROOT, '..', 'closet')
+    if os.path.exists(os.path.join(closet, 'build.py')):
+        sys.path.insert(0, closet); import build as closet_build
+        log(f'closet app: {os.path.relpath(closet_build.build(), os.path.join(ROOT, ".."))}')
 
 def render(piece, src):
     im = hybrid.render_piece(piece, src, log)
@@ -121,6 +125,11 @@ def add(a):
     if a.swatch: piece['swatch'] = True
     log(f'[{key}] 3/4 render ({"photo cutout" if cat == "shoes" else template})')
     render(piece, src)
+    if not a.swatch:
+        import studio
+        os.makedirs(studio.OUT, exist_ok=True)
+        hybrid.export_webp(studio.render(piece, log), os.path.join(studio.OUT, f'{key}.webp'))
+        log(f'  studio photo: images/photo/{key}.webp')
 
     if existing: ps[ps.index(existing)] = piece
     else: ps.append(piece)
